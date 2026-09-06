@@ -1,0 +1,26 @@
+[
+  {
+    "id": "graphic-design",
+    "icon": "/assets/images/icon-design.svg",
+    "title": "Graphic design",
+    "description": "The most modern and high-quality design made at a professional level."
+  },
+  {
+    "id": "web-development",
+    "icon": "/assets/images/icon-dev.svg",
+    "title": "Web development",
+    "description": "High-quality development of sites at the professional level."
+  },
+  {
+    "id": "data-science",
+    "icon": "/assets/images/icon-app.svg",
+    "title": "Data Science",
+    "description": "Professional at Microsoft Office Word, Excel and PowerPoint."
+  },
+  {
+    "id": "photography-montage",
+    "icon": "/assets/images/icon-photo.svg",
+    "title": "Photography & Montage",
+    "description": "I make high-quality photos of any category at a professional level."
+  }
+]

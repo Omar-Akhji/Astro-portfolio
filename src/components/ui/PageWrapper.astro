@@ -1,0 +1,12 @@
+---
+const { class: className = "" } = Astro.props;
+---
+
+<article
+  class:list={[
+    `z-1 animate-fade-in w-full min-w-70 min-h-[calc(100vh-8rem)] rounded-card border-2 border-glass-border bg-bg p-4 pbe-16 shadow-1 sm:p-8 sm:pbe-28 lg:shadow-5`,
+    className,
+  ]}
+>
+  <slot />
+</article>

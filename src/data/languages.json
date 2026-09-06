@@ -1,0 +1,56 @@
+[
+  {
+    "id": "html5",
+    "name": "HTML5",
+    "order": 1,
+    "url": "/assets/icons/tech/html5.svg"
+  },
+  {
+    "id": "css3",
+    "name": "CSS3",
+    "order": 2,
+    "url": "/assets/icons/tech/css3.svg"
+  },
+  {
+    "id": "tailwindcss",
+    "name": "TailwindCSS",
+    "order": 3,
+    "url": "/assets/icons/tech/tailwindcss.svg"
+  },
+  {
+    "id": "javascript",
+    "name": "JavaScript",
+    "order": 4,
+    "url": "/assets/icons/tech/javascript.svg"
+  },
+  {
+    "id": "typescript",
+    "name": "TypeScript",
+    "order": 5,
+    "url": "/assets/icons/tech/typescript.svg"
+  },
+  {
+    "id": "react",
+    "name": "React",
+    "order": 6,
+    "url": "/assets/icons/tech/react.svg"
+  },
+  {
+    "id": "vuejs",
+    "name": "Vue",
+    "order": 7,
+    "url": "/assets/icons/tech/vuejs.svg"
+  },
+  {
+    "id": "astro",
+    "name": "Astro",
+    "order": 8,
+    "url": "/assets/icons/tech/astro.svg"
+  },
+  {
+    "id": "laravel",
+    "name": "Laravel",
+    "order": 9,
+    "url": "/assets/icons/tech/laravel.svg"
+  }
+]

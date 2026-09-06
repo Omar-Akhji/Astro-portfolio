@@ -1,0 +1,48 @@
+<div
+  class="z-1 animate-fade-in rounded-card border border-glass-border bg-bg p-4 pb-16 shadow-1 sm:mx-auto sm:w-130 sm:p-8 sm:pb-28 md:w-175 lg:w-237.5 lg:shadow-5 xl:min-h-full xl:w-auto"
+>
+  <!-- Title -->
+  <div class="mb-8 h-9 w-36 animate-pulse rounded bg-white/10"></div>
+
+  <!-- Intro text -->
+  <div class="mb-8 space-y-3">
+    <div class="h-3.5 w-full animate-pulse rounded bg-white/10"></div>
+    <div class="h-3.5 w-5/6 animate-pulse rounded bg-white/10"></div>
+    <div class="h-3.5 w-4/6 animate-pulse rounded bg-white/10"></div>
+    <div class="mt-4 h-3.5 w-full animate-pulse rounded bg-white/10"></div>
+    <div class="h-3.5 w-3/4 animate-pulse rounded bg-white/10"></div>
+  </div>
+
+  <!-- Section title -->
+  <div class="mb-6 h-7 w-44 animate-pulse rounded bg-white/10"></div>
+
+  <!-- Service cards grid -->
+  <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
+    {
+      ["s1", "s2", "s3", "s4"].map(() => (
+        <div class="flex gap-4 rounded-2xl border border-glass-border bg-white/5 p-6">
+          <div class="size-16 shrink-0 animate-pulse rounded-full bg-white/10" />
+          <div class="grow space-y-2">
+            <div class="h-4 w-2/3 animate-pulse rounded bg-white/10" />
+            <div class="h-3 w-full animate-pulse rounded bg-white/10" />
+            <div class="h-3 w-4/5 animate-pulse rounded bg-white/10" />
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- Section title -->
+  <div class="mb-6 h-7 w-56 animate-pulse rounded bg-white/10"></div>
+
+  <!-- Programming languages -->
+  <div class="rounded-2xl border border-glass-border bg-white/5 p-6">
+    <div class="flex flex-wrap items-center gap-6">
+      {
+        ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9"].map(() => (
+          <div class="size-14 animate-pulse rounded-full bg-white/10" />
+        ))
+      }
+    </div>
+  </div>
+</div>

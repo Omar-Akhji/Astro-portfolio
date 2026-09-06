@@ -1,0 +1,22 @@
+---
+import Layout from "@layouts/Layout.astro";
+import ContactContent from "@components/sections/ContactContent.vue";
+import PageWrapper from "@components/ui/PageWrapper.astro";
+---
+
+<Layout
+  description="Get in touch with Omar Akhji. Send a message for freelance work, collaboration, or job opportunities in web development."
+  title="Contact | Omar Akhji"
+>
+  <PageWrapper>
+    <!-- ── Page Title ── -->
+    <header>
+      <h1
+        class="relative mb-8 pb-2 text-2xl font-semibold text-text capitalize after:absolute after:bottom-0 after:left-0 after:h-0.75 after:w-8 after:rounded-sm after:bg-linear-to-r after:from-violet after:to-blueviolet sm:pb-4 sm:text-[2rem] sm:font-semibold sm:after:h-1.25 sm:after:w-10"
+      >
+        Contact
+      </h1>
+    </header>
+    <ContactContent client:load />
+  </PageWrapper>
+</Layout>

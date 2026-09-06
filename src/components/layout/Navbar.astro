@@ -1,0 +1,40 @@
+---
+const pathname = new URL(Astro.request.url).pathname;
+// Strip trailing slash except for root path
+const currentPath = pathname === "/" ? "/" : pathname.replace(/\/$/, "");
+
+const links = [
+  { name: "About", path: "/" },
+  { name: "Resume", path: "/resume" },
+  { name: "Portfolio", path: "/portfolio" },
+  { name: "Blog", path: "/blog" },
+  { name: "Contact", path: "/contact" },
+];
+---
+
+<nav
+  class="fixed bottom-0 left-0 z-20 mx-3 mb-0 w-[calc(100%-1.5rem)] rounded-t-card border-2 border-glass-border bg-card/75 shadow-2 backdrop-blur-md lg:absolute lg:top-0 lg:right-0 lg:bottom-auto lg:left-auto lg:m-0 lg:w-max lg:rounded-none lg:rounded-tr-card lg:rounded-bl-card lg:px-5 lg:shadow-none"
+>
+  <ul
+    class="flex flex-wrap items-center justify-center gap-3 px-2.5 xs:gap-4 sm:gap-5 lg:gap-7 lg:px-5"
+  >
+    {
+      links.map((link) => {
+        const isActive = currentPath === link.path;
+        return (
+          <li>
+            <a
+              class:list={[
+                `xs:text-[0.8125rem] block px-1.5 py-5 text-[0.75rem] font-medium transition-colors sm:text-[0.875rem] md:text-[0.9375rem]`,
+                { "text-blueviolet": isActive, "text-text-muted hover:text-text": !isActive },
+              ]}
+              href={link.path}
+            >
+              {link.name}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>

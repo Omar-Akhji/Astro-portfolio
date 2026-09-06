@@ -1,0 +1,91 @@
+---
+import Layout from "@layouts/Layout.astro";
+import PageWrapper from "@components/ui/PageWrapper.astro";
+import { getCollection } from "astro:content";
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
+
+const posts = await getCollection("blog");
+// Sort posts by date descending
+const sortedPosts = posts.toSorted(
+  (a, b) => new Date(b.data.dateTime).getTime() - new Date(a.data.dateTime).getTime(),
+);
+---
+
+<Layout
+  description="Articles and insights on web development, React, Astro, and software engineering by Omar Akhji."
+  title="Blog | Omar Akhji"
+>
+  <PageWrapper>
+    <!-- ── Page Title ── -->
+    <header>
+      <h2
+        class="relative mb-8 pb-2 text-2xl font-semibold text-text capitalize after:absolute after:bottom-0 after:left-0 after:h-0.75 after:w-8 after:rounded-sm after:bg-linear-to-r after:from-violet after:to-blueviolet sm:pb-4 sm:text-[2rem] sm:font-semibold sm:after:h-1.25 sm:after:w-10"
+      >
+        Blog
+      </h2>
+    </header>
+
+    <!-- ── Blog Grid ── -->
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2 lg:gap-8">
+      {
+        sortedPosts.map((post) => (
+          <div class="group relative flex w-full max-w-xl min-w-64 flex-col overflow-hidden rounded-2xl border-2 border-glass-border bg-white/5 p-4 transition-all duration-300 hover:bg-white/10">
+            {/* Glow */}
+            <div class="absolute -top-10 -right-10 size-24 rounded-full bg-blueviolet/5 blur-3xl transition-all duration-500 group-hover:bg-blueviolet/15" />
+
+            <div class="relative aspect-4/3 min-h-48 w-full shrink-0 overflow-hidden rounded-xl border-2 border-glass-border lg:h-57.5">
+              <img
+                alt={post.data.title}
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                src={typeof post.data.image === "string" ? post.data.image : post.data.image.src}
+              />
+            </div>
+
+            <div class="flex grow flex-col px-4 py-5">
+              <div class="mb-2.5 flex items-center gap-3">
+                <span class="rounded-full border-2 border-glass-border bg-card px-3 py-0.5 text-[0.6875rem] font-medium text-blueviolet sm:py-1 sm:text-xs">
+                  {post.data.category}
+                </span>
+                <svg
+                  class="size-4 text-text-muted"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.25"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="1"
+                  />
+                </svg>
+                <time
+                  class="text-3.5 sm:text-3.75 font-light text-text-muted"
+                  datetime={post.data.dateTime}
+                >
+                  {dateFormatter.format(new Date(post.data.dateTime))}
+                </time>
+              </div>
+
+              <h3 class="mb-2 text-base leading-tight font-semibold text-text transition-colors hover:text-blueviolet sm:text-lg md:text-[1.0625rem] lg:text-lg">
+                <a href={`/blog/${post.id}`}>{post.data.title}</a>
+              </h3>
+
+              <p class="text-3.5 sm:text-3.75 md:text-3.5 lg:text-3.75 leading-relaxed font-light text-text-muted">
+                {post.data.text}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </PageWrapper>
+</Layout>

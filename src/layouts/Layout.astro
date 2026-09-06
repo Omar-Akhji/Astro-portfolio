@@ -1,0 +1,139 @@
+---
+import "@/styles/globals.css";
+import { ClientRouter } from "astro:transitions";
+import CustomCursor from "@components/ui/CustomCursor.vue";
+import Footer from "@components/layout/Footer.astro";
+import Navbar from "@components/layout/Navbar.astro";
+import Sidebar from "@components/layout/Sidebar.vue";
+import AboutSkeleton from "@components/skeletons/AboutSkeleton.astro";
+import BlogSkeleton from "@components/skeletons/BlogSkeleton.astro";
+import ContactSkeleton from "@components/skeletons/ContactSkeleton.astro";
+import PortfolioSkeleton from "@components/skeletons/PortfolioSkeleton.astro";
+import ResumeSkeleton from "@components/skeletons/ResumeSkeleton.astro";
+import resumeData from "@data/resumeData.json";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Omar Akhji — Full Stack Web Developer",
+  description = "Full Stack Web Developer based in Rabat, Morocco. Specializing in React, Astro, Node.js, and Python. Explore my portfolio, resume, and blog.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html
+  class="font-sans"
+  lang="en"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width"
+      name="viewport"
+    />
+  </head><a
+    href="/favicon.svg"
+    rel="icon"
+    type="image/svg+xml"
+  ></a>
+  <a
+    href="/favicon.ico"
+    rel="icon"
+  ></a>
+  <meta
+    content={Astro.generator}
+    name="generator"
+  />
+
+  <title>{title}</title>
+  <ClientRouter />
+  <meta
+    content={description}
+    name="description"
+  />
+
+  <link
+    href="https://fonts.googleapis.com"
+    rel="preconnect"
+  />
+  <link
+    crossorigin
+    href="https://fonts.gstatic.com"
+    rel="preconnect"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <body class="relative min-h-screen bg-bg font-sans leading-[1.6] text-text antialiased">
+    <CustomCursor client:only="vue" />
+
+    <div
+      class="mx-auto my-4 mb-18.75 px-3 min-w-64.75 sm:mt-15 sm:mb-25 sm:max-w-5xl sm:px-4 md:px-6 xl:flex xl:max-w-300 xl:items-stretch xl:justify-center xl:gap-6"
+    >
+      <Sidebar
+        client:load
+        contact={resumeData.personal.contact}
+        initials={resumeData.personal.initials}
+        languages={resumeData.personal.languages}
+        name={resumeData.personal.name}
+        title={resumeData.personal.title}
+      />
+      <div class="relative w-full min-w-0 lg:mx-auto xl:mx-0 xl:w-3/4">
+        <Navbar />
+        <main>
+          <!-- Skeleton container: hidden by default, shown during navigation -->
+          <div
+            aria-hidden="true"
+            class="hidden"
+            id="skeleton-container"
+          >
+            <div
+              class="hidden"
+              data-skeleton="/"
+            >
+              <AboutSkeleton />
+            </div>
+            <div
+              class="hidden"
+              data-skeleton="/resume"
+            >
+              <ResumeSkeleton />
+            </div>
+            <div
+              class="hidden"
+              data-skeleton="/portfolio"
+            >
+              <PortfolioSkeleton />
+            </div>
+            <div
+              class="hidden"
+              data-skeleton="/blog"
+            >
+              <BlogSkeleton />
+            </div>
+            <div
+              class="hidden"
+              data-skeleton="/contact"
+            >
+              <ContactSkeleton />
+            </div>
+          </div>
+
+          <!-- Actual page content -->
+          <div id="page-content">
+            <slot />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    </div>
+    <script src="../scripts/transitions.ts"></script>
+  </body>
+
+
+</html>

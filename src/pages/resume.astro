@@ -1,0 +1,128 @@
+---
+import Layout from "@layouts/Layout.astro";
+import AwardIcon from "@components/icons/AwardIcon.astro";
+import BriefcaseIcon from "@components/icons/BriefcaseIcon.astro";
+import GraduationCapIcon from "@components/icons/GraduationCapIcon.astro";
+import PageWrapper from "@components/ui/PageWrapper.astro";
+import SectionTitle from "@components/ui/SectionTitle.astro";
+import { getCollection } from "astro:content";
+
+const education = await getCollection("education");
+const experience = await getCollection("experience");
+const skills = await getCollection("skills");
+---
+
+<Layout
+  description="Education, work experience, and technical skills of Omar Akhji — Full Stack Web Developer specializing in React, Node.js, and Python."
+  title="Resume | Omar Akhji - Fullstack Web Developer"
+>
+  <PageWrapper>
+    <!-- ── Page Title ── -->
+    <header>
+      <h1
+        class="relative mb-8 pb-2 text-2xl font-semibold text-text capitalize after:absolute after:bottom-0 after:left-0 after:h-0.75 after:w-8 after:rounded-sm after:bg-linear-to-r after:from-violet after:to-blueviolet sm:pb-4 sm:text-[2rem] sm:font-semibold sm:after:h-1.25 sm:after:w-10"
+      >
+        Resume
+      </h1>
+    </header>
+
+    <!-- ── Education ── -->
+    <section class="mb-8">
+      <SectionTitle icon={GraduationCapIcon}> Education </SectionTitle>
+      <div class="relative space-y-0">
+        {
+          education.map((edu) => (
+            <div class="group relative flex gap-4 md:gap-6">
+              {/* Timeline Column */}
+              <div class="flex w-10 shrink-0 flex-col items-center">
+                <div class="flex h-6 flex-col items-center justify-center">
+                  <div class="z-10 size-4 shrink-0 rounded-full bg-blueviolet shadow-[0_0_15px_rgba(99,70,230,0.4)] ring-4 ring-blueviolet/20" />
+                </div>
+                <div class="my-3 w-0.5 grow rounded-full bg-blueviolet/20 transition-colors group-hover:bg-blueviolet/40" />
+              </div>
+
+              {/* Content Column */}
+              <div class="pb-8 text-sm sm:text-[0.9375rem]">
+                <h4 class="mb-1 flex min-h-6 items-center text-sm leading-tight font-medium text-text sm:text-[0.9375rem]">
+                  {edu.data.title}
+                </h4>
+                <time class="mb-2 block text-[0.8125rem] leading-relaxed font-normal text-violet/70 sm:text-[0.9375rem]">
+                  {edu.data.period}
+                </time>
+                <div
+                  class="text-[0.8125rem] leading-relaxed font-light text-text-muted sm:text-[0.9375rem]"
+                  set:html={edu.data.description}
+                />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ── Work Experience ── -->
+    <section class="mt-12 mb-8">
+      <SectionTitle icon={BriefcaseIcon}> Experience </SectionTitle>
+      <div class="relative space-y-0">
+        {
+          experience.map((exp) => (
+            <div class="group relative flex gap-4 md:gap-6">
+              {/* Timeline Column */}
+              <div class="flex w-10 shrink-0 flex-col items-center">
+                <div class="flex h-6 flex-col items-center justify-center">
+                  <div class="z-10 size-4 shrink-0 rounded-full bg-blueviolet shadow-[0_0_15px_rgba(99,70,230,0.4)] ring-4 ring-blueviolet/20" />
+                </div>
+                <div class="my-3 w-0.5 grow rounded-full bg-blueviolet/20 transition-colors group-hover:bg-blueviolet/40" />
+              </div>
+
+              {/* Content Column */}
+              <div class="pb-8 text-sm sm:text-[0.9375rem]">
+                <h4 class="mb-1 flex min-h-6 items-center text-sm leading-tight font-medium text-text sm:text-[0.9375rem]">
+                  {exp.data.title}
+                </h4>
+                <time class="mb-2 block text-[0.8125rem] leading-relaxed font-normal text-violet/70 sm:text-[0.9375rem]">
+                  {exp.data.period}
+                </time>
+                <div
+                  class="text-[0.8125rem] leading-relaxed font-light text-text-muted sm:text-[0.9375rem]"
+                  set:html={exp.data.description}
+                />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ── Technical Skills ── -->
+    <section class="mt-12 mb-8">
+      <SectionTitle icon={AwardIcon}> Technical Skills </SectionTitle>
+      <div class="rounded-2xl border-2 border-glass-border bg-white/5 p-8">
+        <ul class="space-y-6">
+          {
+            skills.map((skill) => (
+              <li>
+                <div class="mb-2 flex items-center justify-between text-[0.8125rem] tracking-wider text-text-muted uppercase sm:text-[0.9375rem]">
+                  <span>{skill.data.name}</span>
+                  <data
+                    class="text-silver font-light"
+                    value={skill.data.percentage}
+                  >
+                    {skill.data.percentage}%
+                  </data>
+                </div>
+                <progress
+                  class="block h-2 w-full appearance-none overflow-hidden rounded-full border-none bg-transparent [&::-moz-progress-bar]:rounded-full [&::-moz-progress-bar]:bg-linear-to-r [&::-moz-progress-bar]:from-violet [&::-moz-progress-bar]:to-blueviolet [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-bar]:bg-glass-border [&::-webkit-progress-value]:rounded-full [&::-webkit-progress-value]:bg-linear-to-r [&::-webkit-progress-value]:from-violet [&::-webkit-progress-value]:to-blueviolet [&::-webkit-progress-value]:transition-all [&::-webkit-progress-value]:duration-1000"
+                  max="100"
+                  value={skill.data.percentage}
+                >
+                  {skill.data.percentage}%
+                </progress>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+  </PageWrapper>
+</Layout>

@@ -1,0 +1,345 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  /* Colors */
+  --color-indigo: #6416ff;
+  --color-violet: oklch(72% 0.19 295deg); /* violet */
+  --color-blueviolet: oklch(50% 0.28 285deg); /* blueviolet */
+  --color-bg: oklch(16% 0.01 240deg);
+  --color-card: oklch(100% 0 0deg / 5%);
+  --color-text: oklch(100% 0 0deg);
+  --color-text-muted: oklch(100% 0 0deg / 60%);
+  --color-glass-border: oklch(100% 0 0deg / 10%);
+
+  /* Breakpoints */
+  --breakpoint-xs: 450px;
+  --breakpoint-sm: 580px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1250px;
+
+  /* Border Radius */
+  --radius-card: 1.25rem;
+
+  /* Shadows */
+  --shadow-1: -4px 8px 24px oklch(0% 0 0deg / 25%);
+  --shadow-2: 0 16px 30px oklch(0% 0 0deg / 25%);
+  --shadow-3: 0 16px 40px oklch(0% 0 0deg / 25%);
+  --shadow-5: 0 24px 80px oklch(0% 0 0deg / 25%);
+
+  /* Animations */
+  --animate-fade-in: fadein 500ms ease forwards;
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Fonts */
+  --font-sans: "Montserrat", system-ui, sans-serif;
+}
+
+/* ─── Base Reset ─── */
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  .maplibregl-popup-content {
+    @apply rounded-none! bg-transparent! p-0! shadow-none!;
+  }
+
+  .maplibregl-popup-tip {
+    @apply hidden!;
+  }
+}
+
+/* ─── Scrollbar (body only) ─── */
+
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+@media (width >= 768px) {
+  body::-webkit-scrollbar {
+    width: 16px;
+  }
+}
+
+@media (width >= 1250px) {
+  body::-webkit-scrollbar {
+    width: 1.25rem;
+  }
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--color-glass-border);
+  border: 3px solid var(--color-bg);
+  border-radius: 20px;
+}
+
+@media (width >= 768px) {
+  body::-webkit-scrollbar-thumb {
+    border-width: 4px;
+  }
+}
+
+@media (width >= 1250px) {
+  body::-webkit-scrollbar-thumb {
+    border-width: 5px;
+  }
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, var(--color-blueviolet), var(--color-violet));
+}
+
+body::-webkit-scrollbar-button {
+  height: 1rem;
+  background-color: var(--color-bg);
+}
+
+@media (width >= 580px) {
+  body::-webkit-scrollbar-button {
+    height: 3.75rem;
+  }
+}
+
+/* ─── Inline Scrollbar (horizontal lists) ─── */
+
+@utility has-scrollbar {
+  scroll-behavior: smooth;
+  overscroll-behavior-inline: contain;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin-inline: 1.25rem;
+    background: oklch(from var(--color-bg) calc(l + 0.06) c h);
+    border-radius: 999px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, var(--color-blueviolet), var(--color-violet));
+    border: 2px solid oklch(from var(--color-bg) calc(l + 0.06) c h);
+    border-radius: 999px;
+    transition: background 300ms ease;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--color-blueviolet);
+    border-color: transparent;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  @media (width >= 768px) {
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      margin-inline: 6.25rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-width: 1px;
+    }
+  }
+}
+
+/* ─── Custom Cursor ─── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    cursor: none;
+  }
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
+  transition: opacity 300ms;
+}
+
+.cursor-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--color-indigo);
+  box-shadow: 0 0 12px var(--color-indigo);
+  transition:
+    width 300ms ease,
+    height 300ms ease,
+    background-color 300ms ease;
+}
+
+.cursor-ring {
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--color-indigo);
+  opacity: 0.4;
+  transition:
+    transform 150ms ease-out,
+    width 250ms ease,
+    height 250ms ease,
+    border-color 250ms ease,
+    opacity 250ms ease;
+}
+
+body:has(a:hover) .cursor-ring,
+body:has(button:hover) .cursor-ring,
+body:has([role="button"]:hover) .cursor-ring,
+body:has(.cursor-pointer:hover) .cursor-ring {
+  width: 52px;
+  height: 52px;
+  border-color: var(--color-violet);
+  border-width: 2px;
+  opacity: 0.8;
+}
+
+body:has(a:hover) .cursor-dot,
+body:has(button:hover) .cursor-dot,
+body:has([role="button"]:hover) .cursor-dot,
+body:has(.cursor-pointer:hover) .cursor-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-violet);
+}
+
+/* ─── Scroll Progress Bar ─── */
+
+@keyframes grow-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+#reading-progress {
+  animation: grow-progress auto linear;
+  animation-timeline: scroll();
+}
+
+/* ─── Custom typography styles for markdown article bodies ─── */
+
+.prose-custom {
+  color: oklch(100% 0 0deg / 75%);
+  line-height: 1.8;
+}
+
+.prose-custom p {
+  margin-bottom: 1.5rem;
+}
+
+.prose-custom h2,
+.prose-custom h3,
+.prose-custom h4 {
+  color: oklch(100% 0 0deg);
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+}
+
+.prose-custom h2 {
+  font-size: 1.5rem;
+  border-bottom: 1px solid oklch(100% 0 0deg / 10%);
+  padding-bottom: 0.5rem;
+}
+
+.prose-custom h3 {
+  font-size: 1.25rem;
+}
+
+.prose-custom ul,
+.prose-custom ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.prose-custom ul {
+  list-style-type: disc;
+}
+
+.prose-custom ol {
+  list-style-type: decimal;
+}
+
+.prose-custom li {
+  margin-bottom: 0.5rem;
+}
+
+.prose-custom strong {
+  color: oklch(100% 0 0deg);
+  font-weight: 600;
+}
+
+.prose-custom blockquote {
+  border-left: 4px solid var(--color-blueviolet);
+  background: oklch(100% 0 0deg / 3%);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 0.75rem 0.75rem 0;
+  font-style: italic;
+}
+
+.prose-custom blockquote p {
+  margin-bottom: 0;
+}
+
+.prose-custom pre {
+  background: oklch(100% 0 0deg / 4%) !important;
+  border: 1px solid oklch(100% 0 0deg / 10%);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  overflow: auto;
+  min-width: 100%;
+  max-width: 100%;
+  max-height: 500px;
+  margin-bottom: 1.5rem;
+}
+
+.prose-custom code {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.875em;
+  background: oklch(100% 0 0deg / 8%);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  color: var(--color-violet);
+}
+
+.prose-custom pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}

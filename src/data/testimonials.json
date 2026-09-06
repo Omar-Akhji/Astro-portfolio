@@ -1,0 +1,30 @@
+[
+  {
+    "id": "vs-code",
+    "name": "Visual Studio Code",
+    "avatar": "/assets/images/avatar-1.png",
+    "text": "I usually employ Visual Studio Code (VS Code) as my default code editor due to its performance, versatility, and comprehensive support for modern development patterns. I utilize its Git integration, JavaScript, React, and Python extensions, ESLint and Prettier extensions to make code organized and consistent.",
+    "date": "Code Editor"
+  },
+  {
+    "id": "adobe-cc",
+    "name": "Adobe Creative Cloud",
+    "avatar": "/assets/images/avatar-2.png",
+    "text": "I skillfully employ Adobe Creative Cloud applications, including Photoshop, Illustrator, and Premiere Pro, to edit and create high-quality visual content. My design process values creativity, attention to detail, and meeting project deadlines.",
+    "date": "Design Suite"
+  },
+  {
+    "id": "office-365",
+    "name": "Microsoft Office 365",
+    "avatar": "/assets/images/avatar-3.png",
+    "text": "I am proficient in the use of Microsoft Office 365 tools, including Word, Excel, PowerPoint, and Outlook, for various work and educational purposes. I use Word to create well-organized documents and reports, and Excel to analyze data.",
+    "date": "Productivity"
+  },
+  {
+    "id": "canva",
+    "name": "Canva Design",
+    "avatar": "/assets/images/avatar-4.png",
+    "text": "I use Canva to design visually appealing content for both digital and print platforms, including social media posts, presentations, posters, and marketing materials. I create clean, professional designs using Canva's templates.",
+    "date": "Online Design"
+  }
+]

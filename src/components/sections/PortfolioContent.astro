@@ -1,0 +1,35 @@
+---
+import PortfolioFilter from "@components/features/PortfolioFilter.vue";
+import PageWrapper from "@components/ui/PageWrapper.astro";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
+const sortedProjects = projects.toSorted((a, b) => a.data.order - b.data.order);
+
+// Dynamically compile categories based on active projects
+const projectCategories = ["All", ...new Set(sortedProjects.map((p) => p.data.category))];
+
+const formattedProjects = sortedProjects.map((project) => ({
+  title: project.data.title,
+  category: project.data.category,
+  image: project.data.image.src,
+}));
+---
+
+<PageWrapper>
+  <!-- ── Page Title ── -->
+  <header>
+    <h1
+      class="relative mb-8 pb-2 text-2xl font-semibold text-text capitalize text-shadow-blueviolet/30 text-shadow-sm after:absolute after:bottom-0 after:left-0 after:h-0.75 after:w-8 after:rounded-sm after:bg-linear-to-r after:from-violet after:to-blueviolet sm:pb-4 sm:text-[2rem] sm:font-semibold sm:after:h-1.25 sm:after:w-10"
+    >
+      Portfolio
+    </h1>
+  </header>
+
+  <!-- ── Portfolio Filter (Vue Interactive Island) ── -->
+  <PortfolioFilter
+    categories={projectCategories}
+    client:load
+    projects={formattedProjects}
+  />
+</PageWrapper>

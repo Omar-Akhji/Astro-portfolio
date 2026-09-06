@@ -1,0 +1,11 @@
+[
+  { "id": "javascript", "name": "JavaScript", "percentage": 95 },
+  { "id": "react", "name": "React", "percentage": 90 },
+  { "id": "node", "name": "Node.js", "percentage": 88 },
+  { "id": "css-sass", "name": "CSS/SASS", "percentage": 85 },
+  { "id": "python", "name": "Python", "percentage": 80 },
+  { "id": "sql", "name": "SQL", "percentage": 85 },
+  { "id": "git", "name": "Git", "percentage": 90 },
+  { "id": "docker", "name": "Docker", "percentage": 75 },
+  { "id": "aws", "name": "AWS", "percentage": 70 }
+]
