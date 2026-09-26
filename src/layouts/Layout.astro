@@ -34,41 +34,41 @@ const {
       content="width=device-width"
       name="viewport"
     />
+    <link
+      href="/favicon.svg"
+      rel="icon"
+      type="image/svg+xml"
+    />
+    <link
+      href="/favicon.ico"
+      rel="icon"
+    />
+    <meta
+      content={Astro.generator}
+      name="generator"
+    />
+
+    <title>{title}</title>
+    <ClientRouter />
+    <meta
+      content={description}
+      name="description"
+    />
+
+    <link
+      href="https://fonts.googleapis.com"
+      rel="preconnect"
+    />
+    <link
+      crossorigin
+      href="https://fonts.gstatic.com"
+      rel="preconnect"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <a
-    href="/favicon.svg"
-    rel="icon"
-    type="image/svg+xml"
-  ></a>
-  <a
-    href="/favicon.ico"
-    rel="icon"
-  ></a>
-  <meta
-    content={Astro.generator}
-    name="generator"
-  />
-
-  <title>{title}</title>
-  <ClientRouter />
-  <meta
-    content={description}
-    name="description"
-  />
-
-  <link
-    href="https://fonts.googleapis.com"
-    rel="preconnect"
-  />
-  <link
-    crossorigin
-    href="https://fonts.gstatic.com"
-    rel="preconnect"
-  />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
 
   <body class="relative min-h-screen bg-bg font-sans leading-[1.6] text-text antialiased">
     <CustomCursor />
