@@ -8,7 +8,7 @@ import ClientsList from "@components/features/ClientsList.astro";
 import TestimonialsList from "@components/features/TestimonialsList.astro";
 import PageWrapper from "@components/ui/PageWrapper.astro";
 import SectionTitle from "@components/ui/SectionTitle.astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import type { Testimonial } from "@/types";
 
 const [services, rawLanguages, testimonials] = await Promise.all([
@@ -17,7 +17,10 @@ const [services, rawLanguages, testimonials] = await Promise.all([
   getCollection("testimonials"),
 ]);
 
-const languages = rawLanguages.toSorted((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const languages: CollectionEntry<"languages">[] = rawLanguages.toSorted(
+  (a: CollectionEntry<"languages">, b: CollectionEntry<"languages">) =>
+    (a.data.order ?? 0) - (b.data.order ?? 0),
+);
 const testimonialsData: readonly Testimonial[] = testimonials.map((t) => t.data);
 
 type IconComponent = typeof TerminalIcon;
@@ -91,7 +94,7 @@ const serviceIcons: Readonly<Record<string, IconComponent>> = {
     <SectionTitle>Programming Languages</SectionTitle>
     <div class="rounded-2xl border-2 border-glass-border bg-white/5 p-6">
       <ul class="flex flex-wrap items-center justify-center gap-6 sm:justify-start lg:gap-8">
-        {languages.map((lang) => (
+        {languages.map((lang: CollectionEntry<"languages">) => (
           <li
             class="group relative flex flex-col items-center justify-center transition-transform hover:-translate-y-1"
             title={lang.data.name}
