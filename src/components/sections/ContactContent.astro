@@ -1,0 +1,214 @@
+---
+// Pure TypeScript + Astro Contact Form & Map Component
+---
+
+<div>
+  <!-- ── Map ── -->
+  <section class="mbe-10">
+    <div
+      id="map-container"
+      class="relative overflow-hidden rounded-2xl border-2 border-glass-border bg-white/5 block-62.5 inline-full sm:block-100"
+    >
+      <button
+        id="load-map-btn"
+        aria-label="Load interactive map"
+        class="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 transition-colors hover:bg-white/5"
+        type="button"
+      >
+        <svg
+          class="size-10 text-blueviolet opacity-60"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.25"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
+          <circle
+            cx="12"
+            cy="10"
+            r="3"
+          ></circle>
+        </svg>
+        <span class="text-sm font-medium text-text-muted"> Click to load map </span>
+        <span class="text-xs text-text-muted/50">Rabat, Morocco</span>
+      </button>
+      <div
+        id="map-frame-wrapper"
+        class="hidden h-full w-full"
+      ></div>
+    </div>
+  </section>
+
+  <!-- ── Contact Form ── -->
+  <section>
+    <h3 class="mbe-6 text-xl font-semibold text-text capitalize sm:text-2xl">Contact Form</h3>
+
+    <!-- Status Banner -->
+    <div
+      id="contact-status-banner"
+      class="hidden mbe-6 items-center gap-3 rounded-xl border-2 p-4"
+      role="alert"
+    >
+      <svg
+        id="banner-icon-success"
+        class="hidden size-5 shrink-0"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.25"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+        <path d="m9 11 3 3L22 4"></path>
+      </svg>
+      <svg
+        id="banner-icon-error"
+        class="hidden size-5 shrink-0"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.25"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="12"
+          cy="12"
+          r="10"
+        ></circle>
+        <line
+          x1="12"
+          x2="12"
+          y1="8"
+          y2="12"
+        ></line>
+        <line
+          x1="12"
+          x2="12.01"
+          y1="16"
+          y2="16"
+        ></line>
+      </svg>
+      <p
+        id="banner-message"
+        class="text-sm font-medium"
+      ></p>
+    </div>
+
+    <form
+      id="contact-form"
+      class="space-y-6"
+    >
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div>
+          <label
+            class="sr-only"
+            for="fullname"
+          >
+            Full name
+          </label>
+          <input
+            id="fullname"
+            class="rounded-xl border-2 border-glass-border bg-card p-4 text-text transition-all inline-full placeholder:text-text-muted user-valid:border-green-500/50! user-invalid:border-red-500/50! focus:border-blueviolet focus:ring-1 focus:ring-blueviolet/50 focus:outline-none"
+            name="fullname"
+            placeholder="Full name"
+            required
+            type="text"
+          />
+          <p
+            id="fullname-error"
+            class="hidden mbs-1.5 text-xs font-medium text-red-400"
+          ></p>
+        </div>
+        <div>
+          <label
+            class="sr-only"
+            for="email"
+          >
+            Email address
+          </label>
+          <input
+            id="email"
+            class="rounded-xl border-2 border-glass-border bg-card p-4 text-text transition-all inline-full placeholder:text-text-muted user-valid:border-green-500/50! user-invalid:border-red-500/50! focus:border-blueviolet focus:ring-1 focus:ring-blueviolet/50 focus:outline-none"
+            name="email"
+            placeholder="Email address"
+            required
+            type="email"
+          />
+          <p
+            id="email-error"
+            class="hidden mbs-1.5 text-xs font-medium text-red-400"
+          ></p>
+        </div>
+      </div>
+
+      <div>
+        <label
+          class="sr-only"
+          for="message"
+        >
+          Your Message
+        </label>
+        <textarea
+          id="message"
+          class="resize-y rounded-xl border-2 border-glass-border bg-card p-4 text-text transition-all inline-full min-block-37.5 placeholder:text-text-muted user-valid:border-green-500/50! user-invalid:border-red-500/50! focus:border-blueviolet focus:ring-1 focus:ring-blueviolet/50 focus:outline-none"
+          name="message"
+          placeholder="Your Message"
+          required
+        ></textarea>
+        <p
+          id="message-error"
+          class="hidden mt-1.5 text-xs font-medium text-red-400"
+        ></p>
+      </div>
+
+      <button
+        id="submit-btn"
+        class="group ml-auto flex cursor-pointer items-center justify-center gap-2 rounded-full bg-linear-to-r from-violet to-blueviolet p-3 font-semibold text-bg shadow-[0_0_15px_rgba(99,70,230,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_25px_rgba(99,70,230,0.6)] focus:outline-none disabled:pointer-events-none disabled:opacity-60 sm:px-6 sm:py-3"
+        type="submit"
+      >
+        <svg
+          id="submit-spinner"
+          class="hidden size-5 animate-spin sm:hidden"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.25"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+        </svg>
+        <svg
+          id="submit-icon"
+          class="size-5 sm:hidden"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.25"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path>
+          <path d="m21.854 2.147-10.94 10.939"></path>
+        </svg>
+        <span
+          id="submit-label"
+          class="hidden sm:inline"
+        >
+          Send Message
+        </span>
+      </button>
+    </form>
+  </section>
+</div>
+
+<script src="@scripts/contact.ts"></script>

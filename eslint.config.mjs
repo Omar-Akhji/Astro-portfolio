@@ -5,11 +5,8 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import nounsanitized from "eslint-plugin-no-unsanitized";
 import securityPlugin from "eslint-plugin-security";
 import unicorn from "eslint-plugin-unicorn";
-import eslintPluginVue from "eslint-plugin-vue";
-import eslintPluginVueAccessibility from "eslint-plugin-vuejs-accessibility";
 import { defineConfig } from "eslint/config";
 import globals from "globals";
-import vueParser from "vue-eslint-parser";
 
 /**
  * Modern 2026 ESLint Flat Configuration
@@ -54,18 +51,6 @@ const eslintConfig = defineConfig(
   })),
   ...eslintPluginAstro.configs["flat/recommended"],
   ...eslintPluginAstro.configs["flat/jsx-a11y-strict"],
-  ...eslintPluginVue.configs["flat/recommended-error"],
-  ...eslintPluginVueAccessibility.configs["flat/recommended"],
-  {
-    name: "vue-accessibility-strict-overrides",
-    files: ["**/*.vue"],
-    rules: {
-      // Require an explicit label-to-control ID association, which is valid without nesting.
-      "vuejs-accessibility/label-has-for": ["error", { required: "id" }],
-      "vuejs-accessibility/no-aria-hidden-on-focusable": "error",
-      "vuejs-accessibility/no-role-presentation-on-focusable": "error",
-    },
-  },
   unicorn.configs.recommended,
   securityPlugin.configs.recommended,
   nounsanitized.configs.recommended,
@@ -171,35 +156,6 @@ const eslintConfig = defineConfig(
       "@typescript-eslint/no-unsafe-member-access": "error",
       "@typescript-eslint/no-unsafe-return": "error",
       "@typescript-eslint/no-unsafe-argument": "error",
-    },
-  },
-
-  // ─── Vue 3.5 Modern Component Support ──────────────────────────────────────
-  {
-    name: "vue-rules",
-    files: ["**/*.vue"],
-    languageOptions: {
-      parser: vueParser,
-      parserOptions: { parser: tsParser, extraFileExtensions: [".vue"] },
-    },
-    plugins: { "@typescript-eslint": tsPlugin },
-    rules: {
-      "@typescript-eslint/no-explicit-any": "error",
-      "@typescript-eslint/explicit-function-return-type": [
-        "error",
-        {
-          allowExpressions: true,
-          allowTypedFunctionExpressions: true,
-          allowHigherOrderFunctions: true,
-          allowDirectConstAssertionInArrowFunctions: true,
-        },
-      ],
-      // Allow flexible single-word names for pages, cards, and feature blocks
-      "vue/multi-word-component-names": "off",
-      // Vue 3.5 supports reactive props destructuring natively
-      "vue/no-setup-props-destructure": "off",
-      "vue/no-v-html": "error",
-      "vue/require-default-prop": "off",
     },
   },
 

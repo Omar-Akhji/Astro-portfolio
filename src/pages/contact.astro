@@ -1,6 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import ContactContent from "@components/sections/ContactContent.vue";
+import ContactContent from "@components/sections/ContactContent.astro";
 import PageWrapper from "@components/ui/PageWrapper.astro";
 ---
 
@@ -17,6 +17,6 @@ import PageWrapper from "@components/ui/PageWrapper.astro";
         Contact
       </h1>
     </header>
-    <ContactContent client:load />
+    <ContactContent />
   </PageWrapper>
 </Layout>

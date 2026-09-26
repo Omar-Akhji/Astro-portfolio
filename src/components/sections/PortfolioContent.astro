@@ -1,5 +1,5 @@
 ---
-import PortfolioFilter from "@components/features/PortfolioFilter.vue";
+import PortfolioFilter from "@components/features/PortfolioFilter.astro";
 import PageWrapper from "@components/ui/PageWrapper.astro";
 import { getCollection } from "astro:content";
 
@@ -19,17 +19,14 @@ const formattedProjects = sortedProjects.map((project) => ({
 <PageWrapper>
   <!-- ── Page Title ── -->
   <header>
-    <h1
-      class="relative mb-8 pb-2 text-2xl font-semibold text-text capitalize text-shadow-blueviolet/30 text-shadow-sm after:absolute after:bottom-0 after:left-0 after:h-0.75 after:w-8 after:rounded-sm after:bg-linear-to-r after:from-violet after:to-blueviolet sm:pb-4 sm:text-[2rem] sm:font-semibold sm:after:h-1.25 sm:after:w-10"
-    >
+    <h1 class="relative mb-8 pb-2 text-2xl font-semibold text-text capitalize text-shadow-blueviolet/30 text-shadow-sm after:absolute after:bottom-0 after:left-0 after:h-0.75 after:w-8 after:rounded-sm after:bg-linear-to-r after:from-violet after:to-blueviolet sm:pb-4 sm:text-[2rem] sm:font-semibold sm:after:h-1.25 sm:after:w-10">
       Portfolio
     </h1>
   </header>
 
-  <!-- ── Portfolio Filter (Vue Interactive Island) ── -->
+  <!-- ── Portfolio Filter (Pure TypeScript + Astro) ── -->
   <PortfolioFilter
     categories={projectCategories}
-    client:load
     projects={formattedProjects}
   />
 </PageWrapper>

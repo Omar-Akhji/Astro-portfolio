@@ -5,7 +5,7 @@ import LayoutDashboardIcon from "@components/icons/LayoutDashboardIcon.astro";
 import MonitorIcon from "@components/icons/MonitorIcon.astro";
 import TerminalIcon from "@components/icons/TerminalIcon.astro";
 import ClientsList from "@components/features/ClientsList.astro";
-import TestimonialsList from "@components/features/TestimonialsList.vue";
+import TestimonialsList from "@components/features/TestimonialsList.astro";
 import PageWrapper from "@components/ui/PageWrapper.astro";
 import SectionTitle from "@components/ui/SectionTitle.astro";
 import { getCollection } from "astro:content";
@@ -33,9 +33,7 @@ const serviceIcons: Readonly<Record<string, IconComponent>> = {
 <PageWrapper>
   <!-- ── Page Title ── -->
   <header>
-    <h1
-      class="relative mb-8 pb-2 text-2xl font-semibold text-text capitalize after:absolute after:bottom-0 after:left-0 after:h-0.75 after:w-8 after:rounded-sm after:bg-linear-to-r after:from-violet after:to-blueviolet sm:pb-4 sm:text-[2rem] sm:font-semibold sm:after:h-1.25 sm:after:w-10"
-    >
+    <h1 class="relative mb-8 pb-2 text-2xl font-semibold text-text capitalize after:absolute after:bottom-0 after:left-0 after:h-0.75 after:w-8 after:rounded-sm after:bg-linear-to-r after:from-violet after:to-blueviolet sm:pb-4 sm:text-[2rem] sm:font-semibold sm:after:h-1.25 sm:after:w-10">
       About me
     </h1>
   </header>
@@ -61,32 +59,30 @@ const serviceIcons: Readonly<Record<string, IconComponent>> = {
   <section class="mb-8">
     <SectionTitle>What I'm doing</SectionTitle>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
-      {
-        services.map((service) => {
-          const Icon = serviceIcons[service.data.title] ?? TerminalIcon;
-          return (
-            <div class="group perspective-1000 relative overflow-hidden rounded-2xl border-2 border-glass-border bg-white/5 p-6 transition-all duration-300 hover:border-blueviolet/30 hover:bg-white/8">
-              <div class="absolute -top-10 -right-10 size-24 rounded-full bg-blueviolet/5 blur-3xl transition-all duration-500 group-hover:bg-blueviolet/15" />
-              <div class="relative z-10 flex gap-4">
-                <div class="flex size-16 shrink-0 items-center justify-center rounded-full border-2 border-blueviolet/20 bg-blueviolet/10 text-blueviolet shadow-[0_0_15px_oklch(from_var(--color-blueviolet)_l_c_h/10%)] transition-transform duration-300">
-                  <Icon
-                    class="size-6"
-                    stroke-width={1.25}
-                  />
-                </div>
-                <div>
-                  <h4 class="mb-2 block font-medium text-text transition-colors duration-300 group-hover:text-blueviolet">
-                    {service.data.title}
-                  </h4>
-                  <p class="text-sm leading-relaxed font-light text-text-muted">
-                    {service.data.description}
-                  </p>
-                </div>
+      {services.map((service) => {
+        const Icon = serviceIcons[service.data.title] ?? TerminalIcon;
+        return (
+          <div class="group perspective-1000 relative overflow-hidden rounded-2xl border-2 border-glass-border bg-white/5 p-6 transition-all duration-300 hover:border-blueviolet/30 hover:bg-white/8">
+            <div class="absolute -top-10 -right-10 size-24 rounded-full bg-blueviolet/5 blur-3xl transition-all duration-500 group-hover:bg-blueviolet/15" />
+            <div class="relative z-10 flex gap-4">
+              <div class="flex size-16 shrink-0 items-center justify-center rounded-full border-2 border-blueviolet/20 bg-blueviolet/10 text-blueviolet shadow-[0_0_15px_oklch(from_var(--color-blueviolet)_l_c_h/10%)] transition-transform duration-300">
+                <Icon
+                  class="size-6"
+                  stroke-width={1.25}
+                />
+              </div>
+              <div>
+                <h4 class="mb-2 block font-medium text-text transition-colors duration-300 group-hover:text-blueviolet">
+                  {service.data.title}
+                </h4>
+                <p class="text-sm leading-relaxed font-light text-text-muted">
+                  {service.data.description}
+                </p>
               </div>
             </div>
-          );
-        })
-      }
+          </div>
+        );
+      })}
     </div>
   </section>
 
@@ -95,37 +91,32 @@ const serviceIcons: Readonly<Record<string, IconComponent>> = {
     <SectionTitle>Programming Languages</SectionTitle>
     <div class="rounded-2xl border-2 border-glass-border bg-white/5 p-6">
       <ul class="flex flex-wrap items-center justify-center gap-6 sm:justify-start lg:gap-8">
-        {
-          languages.map((lang) => (
-            <li
-              class="group relative flex flex-col items-center justify-center transition-transform hover:-translate-y-1"
-              title={lang.data.name}
-            >
-              <div class="flex size-14 items-center justify-center rounded-full bg-white/5 p-3 transition-colors group-hover:bg-white/10">
-                <img
-                  alt={lang.data.name}
-                  class="h-full w-full object-contain opacity-50 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0"
-                  height={56}
-                  src={lang.data.url}
-                  width={56}
-                />
-              </div>
-              <span class="absolute -bottom-6 text-xs text-text-muted/0 transition-colors group-hover:text-text-muted">
-                {lang.data.name}
-              </span>
-            </li>
-          ))
-        }
+        {languages.map((lang) => (
+          <li
+            class="group relative flex flex-col items-center justify-center transition-transform hover:-translate-y-1"
+            title={lang.data.name}
+          >
+            <div class="flex size-14 items-center justify-center rounded-full bg-white/5 p-3 transition-colors group-hover:bg-white/10">
+              <img
+                alt={lang.data.name}
+                class="h-full w-full object-contain opacity-50 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+                height={56}
+                src={lang.data.url}
+                width={56}
+              />
+            </div>
+            <span class="absolute -bottom-6 text-xs text-text-muted/0 transition-colors group-hover:text-text-muted">
+              {lang.data.name}
+            </span>
+          </li>
+        ))}
       </ul>
     </div>
   </section>
 
-  <!-- ── Testimonials (Vue Interactive Island) ── -->
+  <!-- ── Testimonials (Pure TypeScript + Astro) ── -->
   <SectionTitle>Testimonials</SectionTitle>
-  <TestimonialsList
-    client:visible
-    testimonials={testimonialsData}
-  />
+  <TestimonialsList testimonials={testimonialsData} />
 
   <!-- ── Clients ── -->
   <ClientsList />

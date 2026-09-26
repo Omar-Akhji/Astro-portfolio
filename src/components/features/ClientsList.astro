@@ -10,15 +10,13 @@ const clients = await getCollection("clients");
   <div class="has-scrollbar snap-x snap-mandatory overflow-x-auto px-1 pt-6 pb-8 md:pb-10">
     <div class="inline-flex min-w-full rounded-2xl border-2 border-glass-border bg-white/5 p-8">
       <ul class="flex gap-4">
-        {
-          clients.map((client) => (
-            <li class="flex w-full max-w-60 min-w-30 shrink-0 snap-center items-center justify-center opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 sm:min-w-37.5 md:min-w-45">
-              <div class="text-xl font-bold tracking-widest text-text-muted uppercase">
-                {client.data.alt}
-              </div>
-            </li>
-          ))
-        }
+        {clients.map((client) => (
+          <li class="flex w-full max-w-60 min-w-30 shrink-0 snap-center items-center justify-center opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 sm:min-w-37.5 md:min-w-45">
+            <div class="text-xl font-bold tracking-widest text-text-muted uppercase">
+              {client.data.alt}
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   </div>

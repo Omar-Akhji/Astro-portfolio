@@ -21,7 +21,7 @@
     "lib": ["ES2025", "DOM", "DOM.Iterable"],
     "ignoreDeprecations": "6.0",
 
-    // ─── Vue Template & JSX Preservation ──────────────────────────────────
+    // ─── JSX Preservation ────────────────────────────────────────────────
     "jsx": "preserve",
 
     // ─── Module ────────────────────────────────────────────────────────────

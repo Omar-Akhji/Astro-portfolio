@@ -1,10 +1,10 @@
 ---
 import "@/styles/globals.css";
 import { ClientRouter } from "astro:transitions";
-import CustomCursor from "@components/ui/CustomCursor.vue";
+import CustomCursor from "@components/ui/CustomCursor.astro";
 import Footer from "@components/layout/Footer.astro";
 import Navbar from "@components/layout/Navbar.astro";
-import Sidebar from "@components/layout/Sidebar.vue";
+import Sidebar from "@components/layout/Sidebar.astro";
 import AboutSkeleton from "@components/skeletons/AboutSkeleton.astro";
 import BlogSkeleton from "@components/skeletons/BlogSkeleton.astro";
 import ContactSkeleton from "@components/skeletons/ContactSkeleton.astro";
@@ -70,13 +70,12 @@ const {
   />
 
   <body class="relative min-h-screen bg-bg font-sans leading-[1.6] text-text antialiased">
-    <CustomCursor client:only="vue" />
+    <CustomCursor />
 
     <div
       class="mx-auto my-4 mb-18.75 px-3 min-w-64.75 sm:mt-15 sm:mb-25 sm:max-w-5xl sm:px-4 md:px-6 xl:flex xl:max-w-300 xl:items-stretch xl:justify-center xl:gap-6"
     >
       <Sidebar
-        client:load
         contact={resumeData.personal.contact}
         initials={resumeData.personal.initials}
         languages={resumeData.personal.languages}
