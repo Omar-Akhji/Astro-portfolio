@@ -17,26 +17,18 @@ const [services, rawLanguages, testimonials] = await Promise.all([
   getCollection("testimonials"),
 ]);
 
-const languages: CollectionEntry<"languages">[] = rawLanguages.reduce<
-  CollectionEntry<"languages">[]
->((sorted, item) => {
-  const targetIndex = sorted.findIndex(
-    (current) => (current.data.order ?? 0) > (item.data.order ?? 0),
-  );
-  if (targetIndex === -1) {
-    return [...sorted, item];
-  }
-  return [...sorted.slice(0, targetIndex), item, ...sorted.slice(targetIndex)];
-}, []);
+const languages: CollectionEntry<"languages">[] = rawLanguages.toSorted(
+  (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0),
+);
 const testimonialsData: readonly Testimonial[] = testimonials.map((t) => t.data);
 
 type IconComponent = typeof TerminalIcon;
 
 const serviceIcons: Readonly<Record<string, IconComponent>> = {
-  "Graphic design": LayoutDashboardIcon,
-  "Web development": MonitorIcon,
-  "Data Science": FileCodeIcon,
-  "Photography & Montage": CameraIcon,
+  "graphic-design": LayoutDashboardIcon,
+  "web-development": MonitorIcon,
+  "data-science": FileCodeIcon,
+  "photography-montage": CameraIcon,
 };
 ---
 
@@ -70,7 +62,7 @@ const serviceIcons: Readonly<Record<string, IconComponent>> = {
     <SectionTitle>What I'm doing</SectionTitle>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
       {services.map((service) => {
-        const Icon = serviceIcons[service.data.title] ?? TerminalIcon;
+        const Icon = serviceIcons[service.id] ?? TerminalIcon;
         return (
           <div class="group perspective-1000 relative overflow-hidden rounded-2xl border-2 border-glass-border bg-white/5 p-6 transition-all duration-300 hover:border-blueviolet/30 hover:bg-white/8">
             <div class="absolute -top-10 -right-10 size-24 rounded-full bg-blueviolet/5 blur-3xl transition-all duration-500 group-hover:bg-blueviolet/15" />
