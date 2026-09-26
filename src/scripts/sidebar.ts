@@ -10,15 +10,22 @@ const setupSidebar = (): void => {
     return;
   }
 
-  let isActive = false;
+  // Prevent duplicate listener registration if button element is persisted
+  if (toggleBtn.dataset["bound"] === "true") {
+    return;
+  }
+  toggleBtn.dataset["bound"] = "true";
 
   const toggleSidebar = (): void => {
-    isActive = !isActive;
-    toggleBtn.setAttribute("aria-expanded", String(isActive));
-    toggleBtn.setAttribute("aria-label", isActive ? "Hide Contacts" : "Show Contacts");
-    toggleLabel.textContent = isActive ? "Hide Contacts" : "Show Contacts";
+    // Read state from DOM directly for deterministic synchronization
+    const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+    const nextState = !isExpanded;
 
-    if (isActive) {
+    toggleBtn.setAttribute("aria-expanded", String(nextState));
+    toggleBtn.setAttribute("aria-label", nextState ? "Hide Contacts" : "Show Contacts");
+    toggleLabel.textContent = nextState ? "Hide Contacts" : "Show Contacts";
+
+    if (nextState) {
       aside.classList.remove("max-block-28", "sm:max-block-45");
       aside.classList.add("max-block-375");
 

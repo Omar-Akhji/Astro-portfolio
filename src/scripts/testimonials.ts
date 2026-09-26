@@ -5,10 +5,17 @@ const setupTestimonials = (): void => {
   const nameEl = document.querySelector<HTMLHeadingElement>("#dialog-name");
   const dateEl = document.querySelector<HTMLElement>("#dialog-date");
   const textEl = document.querySelector<HTMLParagraphElement>("#dialog-text");
+  const list = document.querySelector<HTMLUListElement>("#testimonials-list");
 
-  if (!dialog || !closeBtn || !avatarEl || !nameEl || !dateEl || !textEl) {
+  if (!dialog || !closeBtn || !avatarEl || !nameEl || !dateEl || !textEl || !list) {
     return;
   }
+
+  // Prevent duplicate binding on persisted dialog/list
+  if (list.dataset["bound"] === "true") {
+    return;
+  }
+  list.dataset["bound"] = "true";
 
   const openTestimonial = (card: HTMLElement): void => {
     const name = card.dataset["name"] ?? "";
@@ -41,20 +48,29 @@ const setupTestimonials = (): void => {
     closeTestimonial();
   });
 
-  const cards = document.querySelectorAll<HTMLElement>(".testimonial-card");
-  cards.forEach((card) => {
-    card.addEventListener("click", (): void => {
-      openTestimonial(card);
-    });
+  // Event delegation on the container for cards
+  list.addEventListener("click", (e: MouseEvent): void => {
+    const target = e.target as HTMLElement | null;
+    const card = target?.closest<HTMLElement>(".testimonial-card");
+    if (!card) {
+      return;
+    }
+    openTestimonial(card);
+  });
 
-    card.addEventListener("keydown", (e: KeyboardEvent): void => {
-      if (e.key !== "Enter" && e.key !== " ") {
-        return;
-      }
+  list.addEventListener("keydown", (e: KeyboardEvent): void => {
+    if (e.key !== "Enter" && e.key !== " ") {
+      return;
+    }
 
-      e.preventDefault();
-      openTestimonial(card);
-    });
+    const target = e.target as HTMLElement | null;
+    const card = target?.closest<HTMLElement>(".testimonial-card");
+    if (!card) {
+      return;
+    }
+
+    e.preventDefault();
+    openTestimonial(card);
   });
 };
 

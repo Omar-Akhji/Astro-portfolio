@@ -9,7 +9,10 @@ const { testimonials } = Astro.props;
 ---
 
 <section class="mb-9">
-  <ul class="scrollbar-none flex snap-x snap-mandatory gap-4 overflow-x-auto pbe-6">
+  <ul
+    id="testimonials-list"
+    class="scrollbar-none flex snap-x snap-mandatory gap-4 overflow-x-auto pbe-6"
+  >
     {
       testimonials.map((testimonial) => (
         <li

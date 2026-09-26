@@ -6,6 +6,7 @@ export const setupPortfolioFilter = (): void => {
     return;
   }
 
+  const categoryList = container.querySelector<HTMLUListElement>("#portfolio-category-list");
   const tabs = container.querySelectorAll<HTMLButtonElement>(".portfolio-tab");
   const cards = container.querySelectorAll<HTMLElement>(".portfolio-card");
 
@@ -24,13 +25,13 @@ export const setupPortfolioFilter = (): void => {
 
     tabs.forEach((tab) => {
       const cat = tab.dataset["category"] ?? "";
-      if (cat === selectedCategory) {
-        tab.className =
-          "portfolio-tab text-sm font-medium transition-colors sm:text-[0.9375rem] text-blueviolet";
-      } else {
-        tab.className =
-          "portfolio-tab text-sm font-medium transition-colors sm:text-[0.9375rem] cursor-pointer text-text-muted hover:text-text";
-      }
+      const isActive = cat === selectedCategory;
+
+      tab.classList.toggle("text-blueviolet", isActive);
+      tab.classList.toggle("text-text-muted", !isActive);
+      tab.classList.toggle("hover:text-text", !isActive);
+      tab.classList.toggle("cursor-pointer", !isActive);
+      tab.setAttribute("aria-pressed", String(isActive));
     });
 
     cards.forEach((card) => {
@@ -44,11 +45,19 @@ export const setupPortfolioFilter = (): void => {
   const initialCategory = initialParams.get("category") ?? "All";
   updateFilter(initialCategory, false);
 
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", (): void => {
-      const category = tab.dataset["category"] ?? "All";
-      updateFilter(category, true);
-    });
+  if (!categoryList || categoryList.dataset["bound"] === "true") {
+    return;
+  }
+  categoryList.dataset["bound"] = "true";
+
+  categoryList.addEventListener("click", (e: MouseEvent): void => {
+    const target = e.target as HTMLElement | null;
+    const tab = target?.closest<HTMLButtonElement>(".portfolio-tab");
+    if (!tab) {
+      return;
+    }
+    const category = tab.dataset["category"] ?? "All";
+    updateFilter(category, true);
   });
 };
 
