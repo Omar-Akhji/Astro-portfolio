@@ -1,35 +1,39 @@
-<div class="z-1 animate-fade-in rounded-card border border-glass-border bg-bg p-4 pb-16 shadow-1 sm:mx-auto sm:w-130 sm:p-8 sm:pb-28 md:w-175 lg:w-237.5 lg:shadow-5 xl:min-h-full xl:w-auto">
-  <!-- ── Page Title "Blog" + underline ── -->
-  <div class="mb-8 pb-2 sm:pb-4">
-    <div class="h-8 w-20 animate-pulse rounded bg-white/10 sm:h-9"></div>
-    <div class="mt-2 h-0.75 w-8 rounded-sm bg-linear-to-r from-blueviolet to-violet sm:mt-3 sm:h-1.25 sm:w-10"></div>
-  </div>
+---
+// Pure gray skeleton matching Blog page layout and card structures
+---
+
+<article class="z-1 animate-fade-in min-h-[calc(100vh-8rem)] w-full min-w-70 rounded-card border-2 border-glass-border bg-bg p-4 pbe-16 shadow-1 sm:p-8 sm:pbe-28 lg:shadow-5">
+  <!-- ── Page Title + Underline ── -->
+  <header class="mb-8">
+    <div class="h-8 w-20 animate-pulse rounded-md bg-neutral-700/50 sm:h-10 sm:w-28"></div>
+    <div class="mt-2 h-0.75 w-8 rounded-sm bg-neutral-600 sm:mt-3 sm:h-1.25 sm:w-10"></div>
+  </header>
 
   <!-- ── Blog Cards Grid ── -->
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2 lg:gap-8">
     {["b1", "b2", "b3", "b4"].map(() => (
-      <div class="overflow-hidden rounded-2xl border border-glass-border bg-white/5 p-4">
-        <!-- Large image area -->
-        <div class="aspect-4/3 w-full animate-pulse rounded-xl bg-white/8 lg:h-57.5" />
+      <div class="relative flex w-full max-w-xl min-w-64 flex-col overflow-hidden rounded-2xl border-2 border-glass-border bg-white/5 p-4">
+        <!-- Card image area -->
+        <div class="relative aspect-4/3 min-h-48 w-full shrink-0 overflow-hidden rounded-xl border-2 border-glass-border bg-neutral-800/60 animate-pulse lg:h-57.5" />
 
-        <!-- Content below image -->
-        <div class="pt-4 sm:px-2 sm:pt-6">
+        <!-- Card content -->
+        <div class="flex grow flex-col px-4 py-5">
           <!-- Category badge + date row -->
-          <div class="mb-3 flex items-center gap-3">
-            <div class="h-7 w-20 animate-pulse rounded-full bg-white/10" />
-            <div class="h-4 w-28 animate-pulse rounded bg-white/8" />
+          <div class="mb-2.5 flex items-center gap-3">
+            <div class="h-6 w-20 animate-pulse rounded-full border-2 border-neutral-700/40 bg-neutral-800/60" />
+            <div class="h-4 w-24 animate-pulse rounded bg-neutral-700/30" />
           </div>
 
           <!-- Post title -->
-          <div class="mb-3 h-6 w-4/5 animate-pulse rounded bg-white/12 sm:h-7" />
+          <div class="mb-2.5 h-6 w-4/5 animate-pulse rounded bg-neutral-700/50 sm:h-7" />
 
-          <!-- Description text (2 lines) -->
+          <!-- Description text -->
           <div class="space-y-2">
-            <div class="h-4 w-full animate-pulse rounded bg-white/8" />
-            <div class="h-4 w-3/5 animate-pulse rounded bg-white/8" />
+            <div class="h-3.5 w-full animate-pulse rounded bg-neutral-700/30" />
+            <div class="h-3.5 w-3/4 animate-pulse rounded bg-neutral-700/30" />
           </div>
         </div>
       </div>
     ))}
   </div>
-</div>
+</article>

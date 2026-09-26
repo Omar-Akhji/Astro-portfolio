@@ -1,22 +1,36 @@
-<div class="z-1 animate-fade-in rounded-card border border-glass-border bg-bg p-4 pb-16 shadow-1 sm:mx-auto sm:w-130 sm:p-8 sm:pb-28 md:w-175 lg:w-237.5 lg:shadow-5 xl:min-h-full xl:w-auto">
-  <!-- Title -->
-  <div class="mb-8 h-9 w-32 animate-pulse rounded bg-white/10"></div>
+---
+// Pure gray skeleton matching Contact page layout, map, and form
+---
 
-  <!-- Map placeholder -->
-  <div class="mb-10 h-62.5 w-full animate-pulse rounded-2xl border border-glass-border bg-white/5 sm:h-100"></div>
+<article class="z-1 animate-fade-in min-h-[calc(100vh-8rem)] w-full min-w-70 rounded-card border-2 border-glass-border bg-bg p-4 pbe-16 shadow-1 sm:p-8 sm:pbe-28 lg:shadow-5">
+  <!-- ── Page Title + Underline ── -->
+  <header class="mb-8">
+    <div class="h-8 w-28 animate-pulse rounded-md bg-neutral-700/50 sm:h-10 sm:w-36"></div>
+    <div class="mt-2 h-0.75 w-8 rounded-sm bg-neutral-600 sm:mt-3 sm:h-1.25 sm:w-10"></div>
+  </header>
 
-  <!-- Form title -->
-  <div class="mb-6 h-7 w-40 animate-pulse rounded bg-white/10"></div>
-
-  <!-- Form fields -->
-  <div class="space-y-6">
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-      <div class="h-14 animate-pulse rounded-xl bg-white/5"></div>
-      <div class="h-14 animate-pulse rounded-xl bg-white/5"></div>
+  <!-- ── Map Placeholder ── -->
+  <section class="mbe-10">
+    <div class="relative flex h-62.5 w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border-2 border-glass-border bg-white/5 sm:h-100">
+      <div class="size-10 animate-pulse rounded-full bg-neutral-700/40" />
+      <div class="h-4 w-32 animate-pulse rounded bg-neutral-700/30" />
+      <div class="h-3 w-20 animate-pulse rounded bg-neutral-700/20" />
     </div>
-    <div class="min-h-37.5 animate-pulse rounded-xl bg-white/5"></div>
+  </section>
 
-    <!-- Submit button -->
-    <div class="ml-auto h-12 w-44 animate-pulse rounded-full bg-white/10"></div>
-  </div>
-</div>
+  <!-- ── Contact Form Section ── -->
+  <section>
+    <div class="mbe-6 h-7 w-36 animate-pulse rounded-md bg-neutral-700/50"></div>
+
+    <div class="space-y-6">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div class="h-14 animate-pulse rounded-xl border-2 border-glass-border bg-card/60"></div>
+        <div class="h-14 animate-pulse rounded-xl border-2 border-glass-border bg-card/60"></div>
+      </div>
+      <div class="min-h-37.5 animate-pulse rounded-xl border-2 border-glass-border bg-card/60"></div>
+
+      <!-- Submit button -->
+      <div class="ml-auto h-12 w-36 animate-pulse rounded-full bg-neutral-700/50"></div>
+    </div>
+  </section>
+</article>

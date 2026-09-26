@@ -1,25 +1,30 @@
-<div class="z-1 animate-fade-in rounded-card border border-glass-border bg-bg p-4 pb-16 shadow-1 sm:mx-auto sm:w-130 sm:p-8 sm:pb-28 md:w-175 lg:w-237.5 lg:shadow-5 xl:min-h-full xl:w-auto">
-  <!-- Title -->
-  <div class="mb-8 h-9 w-40 animate-pulse rounded bg-white/10"></div>
+---
+// Pure gray skeleton matching Portfolio page layout, filters, and cards grid
+---
 
-  <!-- Filter tabs -->
-  <div class="mb-8 flex gap-4 border-b border-glass-border pb-4 sm:gap-6">
-    {[1, 2, 3, 4].map((id) => (
-      <div
-        class="h-5 animate-pulse rounded bg-white/10"
-        style={{ width: `${60 + (id - 1) * 12}px` }}
-      />
-    ))}
+<article class="z-1 animate-fade-in min-h-[calc(100vh-8rem)] w-full min-w-70 rounded-card border-2 border-glass-border bg-bg p-4 pbe-16 shadow-1 sm:p-8 sm:pbe-28 lg:shadow-5">
+  <!-- ── Page Title + Underline ── -->
+  <header class="mb-8">
+    <div class="h-8 w-32 animate-pulse rounded-md bg-neutral-700/50 sm:h-10 sm:w-40"></div>
+    <div class="mt-2 h-0.75 w-8 rounded-sm bg-neutral-600 sm:mt-3 sm:h-1.25 sm:w-10"></div>
+  </header>
+
+  <!-- ── Filter Tabs ── -->
+  <div class="mbe-8 flex flex-wrap items-center justify-start gap-4 border-b-2 border-glass-border pbe-4 sm:gap-6">
+    <div class="h-6 w-12 animate-pulse rounded-md bg-neutral-700/50" />
+    <div class="h-6 w-32 animate-pulse rounded-md bg-neutral-700/35" />
+    <div class="h-6 w-24 animate-pulse rounded-md bg-neutral-700/35" />
+    <div class="h-6 w-24 animate-pulse rounded-md bg-neutral-700/35" />
   </div>
 
-  <!-- Project grid -->
+  <!-- ── Portfolio Grid (6 cards matching 3x2 on desktop) ── -->
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
     {["p1", "p2", "p3", "p4", "p5", "p6"].map(() => (
       <div>
-        <div class="mb-4 aspect-4/3 w-full animate-pulse rounded-2xl border border-glass-border bg-white/5" />
-        <div class="mb-1 ml-2 h-4 w-24 animate-pulse rounded bg-white/10" />
-        <div class="ml-2 h-3 w-32 animate-pulse rounded bg-white/10" />
+        <div class="relative mbe-4 aspect-4/3 w-full overflow-hidden rounded-2xl border-2 border-glass-border bg-neutral-800/60 animate-pulse" />
+        <div class="mbe-1.5 ml-2 h-5 w-3/4 animate-pulse rounded bg-neutral-700/50" />
+        <div class="ml-2 h-3.5 w-24 animate-pulse rounded bg-neutral-700/30" />
       </div>
     ))}
   </div>
-</div>
+</article>
