@@ -1,4 +1,6 @@
 /// <reference types="astro/client" />
+/// <reference lib="es2023.array" />
+/// <reference lib="esnext" />
 
 declare global {
   interface ImportMetaEnv {
