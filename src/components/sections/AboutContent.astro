@@ -17,10 +17,17 @@ const [services, rawLanguages, testimonials] = await Promise.all([
   getCollection("testimonials"),
 ]);
 
-const languages: CollectionEntry<"languages">[] = rawLanguages.toSorted(
-  (a: CollectionEntry<"languages">, b: CollectionEntry<"languages">) =>
-    (a.data.order ?? 0) - (b.data.order ?? 0),
-);
+const languages: CollectionEntry<"languages">[] = rawLanguages.reduce<
+  CollectionEntry<"languages">[]
+>((sorted, item) => {
+  const targetIndex = sorted.findIndex(
+    (current) => (current.data.order ?? 0) > (item.data.order ?? 0),
+  );
+  if (targetIndex === -1) {
+    return [...sorted, item];
+  }
+  return [...sorted.slice(0, targetIndex), item, ...sorted.slice(targetIndex)];
+}, []);
 const testimonialsData: readonly Testimonial[] = testimonials.map((t) => t.data);
 
 type IconComponent = typeof TerminalIcon;
