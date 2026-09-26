@@ -32,14 +32,11 @@ const readingTime = Math.max(1, Math.round(wordCount / 200));
 >
   <PageWrapper>
     <!-- Reading Progress Bar -->
-    <div
-      class="progress-container pointer-events-none fixed top-0 left-0 z-50 h-1 w-full bg-transparent"
-    >
+    <div class="progress-container pointer-events-none fixed top-0 left-0 z-50 h-1 w-full bg-transparent">
       <div
         class="progress-bar from-violet to-blueviolet h-full w-full origin-left bg-linear-to-r"
         id="reading-progress"
-      >
-      </div>
+      ></div>
     </div>
 
     <!-- Back Button -->
@@ -69,9 +66,7 @@ const readingTime = Math.max(1, Math.round(wordCount / 200));
       <!-- Header -->
       <header class="mb-8">
         <div class="mb-4 flex flex-wrap items-center gap-3 text-xs sm:text-sm">
-          <span
-            class="border-glass-border bg-card text-blueviolet rounded-full border-2 px-3 py-0.5 font-medium sm:py-1"
-          >
+          <span class="border-glass-border bg-card text-blueviolet rounded-full border-2 px-3 py-0.5 font-medium sm:py-1">
             {post.data.category}
           </span>
           <span class="text-text-muted/40">&bull;</span>
@@ -100,13 +95,11 @@ const readingTime = Math.max(1, Math.round(wordCount / 200));
               ></rect>
               <path d="M3 9h18"></path>
             </svg>
-            {
-              new Intl.DateTimeFormat("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              }).format(new Date(post.data.dateTime))
-            }
+            {new Intl.DateTimeFormat("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            }).format(new Date(post.data.dateTime))}
           </time>
           <span class="text-text-muted/40">&bull;</span>
           <span class="text-text-muted flex items-center gap-1.5 font-light">
@@ -131,16 +124,12 @@ const readingTime = Math.max(1, Math.round(wordCount / 200));
           </span>
         </div>
 
-        <h1
-          class="text-text mb-6 text-3xl leading-tight font-bold tracking-tight sm:text-4xl lg:text-5xl"
-        >
+        <h1 class="text-text mb-6 text-3xl leading-tight font-bold tracking-tight sm:text-4xl lg:text-5xl">
           {post.data.title}
         </h1>
 
         <!-- Article Image -->
-        <div
-          class="border-glass-border relative aspect-video min-h-48 max-h-125 w-full overflow-hidden rounded-2xl border-2"
-        >
+        <div class="border-glass-border relative aspect-video min-h-48 max-h-125 w-full overflow-hidden rounded-2xl border-2">
           <img
             alt={post.data.title}
             class="absolute inset-0 h-full w-full object-cover"
@@ -155,40 +144,38 @@ const readingTime = Math.max(1, Math.round(wordCount / 200));
       </section>
 
       <!-- Footer Tags -->
-      {
-        post.data.tags.length > 0 && (
-          <footer class="mt-12 border-t-2 border-glass-border pt-6">
-            <div class="flex flex-wrap items-center gap-3">
-              <span class="flex items-center gap-1.5 text-xs font-semibold tracking-wider text-text-muted uppercase">
-                <svg
-                  class="size-3.5 text-blueviolet"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z" />
-                  <circle
-                    cx="7.5"
-                    cy="7.5"
-                    fill="currentColor"
-                    r=".5"
-                  />
-                </svg>
-                Tags:
+      {post.data.tags.length > 0 && (
+        <footer class="mt-12 border-t-2 border-glass-border pt-6">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="flex items-center gap-1.5 text-xs font-semibold tracking-wider text-text-muted uppercase">
+              <svg
+                class="size-3.5 text-blueviolet"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z" />
+                <circle
+                  cx="7.5"
+                  cy="7.5"
+                  fill="currentColor"
+                  r=".5"
+                />
+              </svg>
+              Tags:
+            </span>
+            {post.data.tags.map((tag: string) => (
+              <span class="rounded-lg border-2 bg-white/5 px-2.5 py-1 text-xs text-text-muted transition-colors hover:bg-white/10 hover:text-text">
+                #{tag}
               </span>
-              {post.data.tags.map((tag: string) => (
-                <span class="rounded-lg border-2 bg-white/5 px-2.5 py-1 text-xs text-text-muted transition-colors hover:bg-white/10 hover:text-text">
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          </footer>
-        )
-      }
+            ))}
+          </div>
+        </footer>
+      )}
     </article>
   </PageWrapper>
 </Layout>
