@@ -3,7 +3,16 @@
   "extends": "astro/tsconfigs/strictest",
 
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "node_modules"],
+  "exclude": [
+    "dist",
+    "node_modules",
+    ".cache",
+    ".temp",
+    "coverage",
+    "skills-catalog",
+    ".agents",
+    ".gemini"
+  ],
 
   "compilerOptions": {
     // ─── Target & Lib ──────────────────────────────────────────────────────
@@ -22,6 +31,10 @@
     "moduleDetection": "force",
     // Allows .ts extensions in imports — required for Bun native TS execution
     "allowImportingTsExtensions": true,
+    // Emits are handled by Bun and Astro; tsc is purely used for type verification
+    "noEmit": true,
+    // Enable type-safe JSON module imports
+    "resolveJsonModule": true,
 
     // ─── Interop ───────────────────────────────────────────────────────────
     // Enforces `import type` for type-only imports
@@ -29,18 +42,34 @@
     "verbatimModuleSyntax": true,
 
     // ─── TS6 Strictness ────────────────────────────────────────────────────
+    "strict": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "useUnknownInCatchVariables": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
     // No enums/namespaces — required for Bun native TS stripping
     "erasableSyntaxOnly": true,
+    // Allows JS files in project while preventing unchecked JS compilation errors
+    "allowJs": true,
+    "checkJs": false,
     // Explicit even though TS6 default — important behavior to document
     "noUncheckedSideEffectImports": true,
-    // Prevents dot-access on index-signature types
-    "noPropertyAccessFromIndexSignature": true,
 
-    // ─── Types ─────────────────────────────────────────────────────────────
-    // CRITICAL in TS6: @types/* no longer auto-discovered
-    // Add bun-types only if you use Bun APIs (Bun.serve, Bun.file, etc.)
-    // Add node if you use Node APIs (process.env, path, fs, etc.)
-    "types": ["node"],
+    // ─── Runtime Environment Types ──────────────────────────────────────────
+    // Explicitly loaded ambient types for Bun and Node.js built-ins in TS 6
+    "types": ["bun", "node"],
 
     // ─── Astro TS Plugin ───────────────────────────────────────────────────
     // Enables IntelliSense for .astro files in editors

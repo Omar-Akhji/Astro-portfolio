@@ -49,10 +49,9 @@ const skills = await getCollection("skills");
                 <time class="mb-2 block text-[0.8125rem] leading-relaxed font-normal text-violet/70 sm:text-[0.9375rem]">
                   {edu.data.period}
                 </time>
-                <div
-                  class="text-[0.8125rem] leading-relaxed font-light text-text-muted sm:text-[0.9375rem]"
-                  set:html={edu.data.description}
-                />
+                <p class="text-[0.8125rem] leading-relaxed font-light text-text-muted sm:text-[0.9375rem]">
+                  {edu.data.description}
+                </p>
               </div>
             </div>
           ))
@@ -83,10 +82,9 @@ const skills = await getCollection("skills");
                 <time class="mb-2 block text-[0.8125rem] leading-relaxed font-normal text-violet/70 sm:text-[0.9375rem]">
                   {exp.data.period}
                 </time>
-                <div
-                  class="text-[0.8125rem] leading-relaxed font-light text-text-muted sm:text-[0.9375rem]"
-                  set:html={exp.data.description}
-                />
+                <p class="text-[0.8125rem] leading-relaxed font-light text-text-muted sm:text-[0.9375rem]">
+                  {exp.data.description}
+                </p>
               </div>
             </div>
           ))

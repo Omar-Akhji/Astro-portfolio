@@ -1,24 +1,28 @@
 ---
-import CameraIcon from "../icons/CameraIcon.astro";
-import FileCodeIcon from "../icons/FileCodeIcon.astro";
-import LayoutDashboardIcon from "../icons/LayoutDashboardIcon.astro";
-import MonitorIcon from "../icons/MonitorIcon.astro";
-import TerminalIcon from "../icons/TerminalIcon.astro";
+import CameraIcon from "@components/icons/CameraIcon.astro";
+import FileCodeIcon from "@components/icons/FileCodeIcon.astro";
+import LayoutDashboardIcon from "@components/icons/LayoutDashboardIcon.astro";
+import MonitorIcon from "@components/icons/MonitorIcon.astro";
+import TerminalIcon from "@components/icons/TerminalIcon.astro";
+import ClientsList from "@components/features/ClientsList.astro";
+import TestimonialsList from "@components/features/TestimonialsList.vue";
+import PageWrapper from "@components/ui/PageWrapper.astro";
+import SectionTitle from "@components/ui/SectionTitle.astro";
 import { getCollection } from "astro:content";
-import ClientsList from "../features/ClientsList.astro";
-import TestimonialsList from "../features/TestimonialsList.vue";
-import PageWrapper from "../ui/PageWrapper.astro";
-import SectionTitle from "../ui/SectionTitle.astro";
+import type { Testimonial } from "@/types";
 
-const services = await getCollection("services");
-const rawLanguages = await getCollection("languages");
+const [services, rawLanguages, testimonials] = await Promise.all([
+  getCollection("services"),
+  getCollection("languages"),
+  getCollection("testimonials"),
+]);
+
 const languages = rawLanguages.toSorted((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
-const testimonials = await getCollection("testimonials");
+const testimonialsData: readonly Testimonial[] = testimonials.map((t) => t.data);
 
-const testimonialsData = testimonials.map((t) => t.data);
+type IconComponent = typeof TerminalIcon;
 
-// Helper to get service icon component
-const serviceIcons: Record<string, any> = {
+const serviceIcons: Readonly<Record<string, IconComponent>> = {
   "Graphic design": LayoutDashboardIcon,
   "Web development": MonitorIcon,
   "Data Science": FileCodeIcon,
@@ -59,7 +63,7 @@ const serviceIcons: Record<string, any> = {
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
       {
         services.map((service) => {
-          const Icon = serviceIcons[service.data.title] || TerminalIcon;
+          const Icon = serviceIcons[service.data.title] ?? TerminalIcon;
           return (
             <div class="group perspective-1000 relative overflow-hidden rounded-2xl border-2 border-glass-border bg-white/5 p-6 transition-all duration-300 hover:border-blueviolet/30 hover:bg-white/8">
               <div class="absolute -top-10 -right-10 size-24 rounded-full bg-blueviolet/5 blur-3xl transition-all duration-500 group-hover:bg-blueviolet/15" />

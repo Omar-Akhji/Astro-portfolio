@@ -1,16 +1,27 @@
+## Package Manager & Tooling
+
+Strictly use **Bun** for all commands, scripts, package installations, and execution.
+
+- NEVER use `npm`, `npx`, `pnpm`, or `yarn`.
+- Always use `bun run <script>`, `bun install`, `bun add <pkg>`, `bun x <tool>`, etc.
+
 ## Development
 
 When starting the dev server, use background mode:
 
 ```
-astro dev --background
+bun run dev
 ```
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+Or using the astro CLI with bun:
+
+```
+bun x astro dev --background
+```
 
 ## Documentation
 
-Full documentation: https://docs.astro.build
+Full documentation: <https://docs.astro.build>
 
 Consult these guides before working on related tasks:
 

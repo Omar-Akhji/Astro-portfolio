@@ -1,7 +1,8 @@
 import type { APIRoute } from "astro";
 import { z } from "zod";
+import type { ContactFieldErrors, ContactFormState } from "@/types";
 
-const ContactSchema = z.object({
+export const ContactSchema = z.object({
   fullname: z
     .string()
     .min(2, "Name must be at least 2 characters")
@@ -13,11 +14,14 @@ const ContactSchema = z.object({
     .max(2000, "Message must be under 2000 characters"),
 });
 
-export const ALL: APIRoute = () => {
-  return Response.json({ success: false, message: "Method Not Allowed" }, { status: 405 });
+export type ContactInput = z.infer<typeof ContactSchema>;
+
+export const ALL: APIRoute = (): Response => {
+  const methodNotAllowed: ContactFormState = { success: false, message: "Method Not Allowed" };
+  return Response.json(methodNotAllowed, { status: 405 });
 };
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request }): Promise<Response> => {
   try {
     const formData = await request.formData();
     const raw = {
@@ -29,48 +33,78 @@ export const POST: APIRoute = async ({ request }) => {
     const result = ContactSchema.safeParse(raw);
 
     if (!result.success) {
-      const fieldErrors: Record<string, string> = {};
+      let fullnameError: string | undefined;
+      let emailError: string | undefined;
+      let messageError: string | undefined;
+
       for (const issue of result.error.issues) {
-        const field = issue.path[0] as string;
-        if (field) fieldErrors[field] = issue.message;
+        const field = issue.path[0];
+        if (field === "fullname" && !fullnameError) {
+          fullnameError = issue.message;
+        } else if (field === "email" && !emailError) {
+          emailError = issue.message;
+        } else if (field === "message" && !messageError) {
+          messageError = issue.message;
+        }
       }
-      return Response.json(
-        { success: false, message: "Please fix the errors below.", errors: fieldErrors },
-        { status: 400, headers: { "Content-Type": "application/json" } },
-      );
+
+      const fieldErrors: ContactFieldErrors = {
+        ...(fullnameError && { fullname: fullnameError }),
+        ...(emailError && { email: emailError }),
+        ...(messageError && { message: messageError }),
+      };
+
+      const errorResponse: ContactFormState = {
+        success: false,
+        message: "Please fix the errors below.",
+        errors: fieldErrors,
+      };
+
+      return Response.json(errorResponse, {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     const { fullname, email, message } = result.data;
 
-    const resendApiKey =
-      (import.meta.env["RESEND_API_KEY"] as string | undefined)
-      ?? process.env["RESEND_API_KEY"]
+    const resendApiKey: string =
+      import.meta.env.RESEND_API_KEY
+      ?? (typeof process === "object" ? process.env["RESEND_API_KEY"] : undefined)
       ?? "";
 
-    if (resendApiKey === "") {
+    if (!resendApiKey) {
       console.error("RESEND_API_KEY environment variable is not configured.");
-      return Response.json(
-        { success: false, message: "Email service is not configured. Please try again later." },
-        { status: 500, headers: { "Content-Type": "application/json" } },
-      );
+      const errorResponse: ContactFormState = {
+        success: false,
+        message: "Email service is not configured. Please try again later.",
+      };
+      return Response.json(errorResponse, {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     const contactTo: string =
-      (import.meta.env["CONTACT_TO_EMAIL"] as string | undefined)
-      ?? process.env["CONTACT_TO_EMAIL"]
+      import.meta.env.CONTACT_TO_EMAIL
+      ?? (typeof process === "object" ? process.env["CONTACT_TO_EMAIL"] : undefined)
       ?? "";
 
-    if (contactTo === "") {
+    if (!contactTo) {
       console.error("CONTACT_TO_EMAIL environment variable is not configured.");
-      return Response.json(
-        { success: false, message: "Email service is not configured. Please try again later." },
-        { status: 500, headers: { "Content-Type": "application/json" } },
-      );
+      const errorResponse: ContactFormState = {
+        success: false,
+        message: "Email service is not configured. Please try again later.",
+      };
+      return Response.json(errorResponse, {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     const fromEmail: string =
-      (import.meta.env["RESEND_FROM_EMAIL"] as string | undefined)
-      ?? process.env["RESEND_FROM_EMAIL"]
+      import.meta.env.RESEND_FROM_EMAIL
+      ?? (typeof process === "object" ? process.env["RESEND_FROM_EMAIL"] : undefined)
       ?? "onboarding@resend.dev";
 
     const response = await fetch("https://api.resend.com/emails", {
@@ -107,21 +141,34 @@ export const POST: APIRoute = async ({ request }) => {
     if (!response.ok) {
       const errorBody = await response.text();
       console.error("Resend API error:", response.status, errorBody);
-      return Response.json(
-        { success: false, message: "Failed to send message. Please try again later." },
-        { status: 500, headers: { "Content-Type": "application/json" } },
-      );
+      const errorResponse: ContactFormState = {
+        success: false,
+        message: "Failed to send message. Please try again later.",
+      };
+      return Response.json(errorResponse, {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
-    return Response.json(
-      { success: true, message: "Message sent successfully! I'll get back to you soon." },
-      { status: 200, headers: { "Content-Type": "application/json" } },
-    );
-  } catch (error) {
-    console.error("Failed to send email:", error);
-    return Response.json(
-      { success: false, message: "Failed to send message. Please try again later." },
-      { status: 500, headers: { "Content-Type": "application/json" } },
-    );
+    const successResponse: ContactFormState = {
+      success: true,
+      message: "Message sent successfully! I'll get back to you soon.",
+    };
+    return Response.json(successResponse, {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    console.error("Failed to send email:", errorMessage);
+    const failureResponse: ContactFormState = {
+      success: false,
+      message: "Failed to send message. Please try again later.",
+    };
+    return Response.json(failureResponse, {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 };

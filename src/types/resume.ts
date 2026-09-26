@@ -1,59 +1,59 @@
-interface Contact {
-  email: string;
-  phone: string;
-  location: string;
-  linkedin: string;
-  github: string;
+export interface ContactInfo {
+  readonly email: string;
+  readonly phone: string;
+  readonly location: string;
+  readonly linkedin: string;
+  readonly github: string;
 }
 
-interface Skill {
-  name: string;
-  level: number;
+export interface ResumeSkill {
+  readonly name: string;
+  readonly level: number;
 }
 
-interface Language {
-  name: string;
-  level: string;
+export interface Language {
+  readonly name: string;
+  readonly level: string;
 }
 
 export interface PersonalInfo {
-  initials: string;
-  name: string;
-  title: string;
-  contact: Contact;
-  skills: Skill[];
-  languages: Language[];
+  readonly initials: string;
+  readonly name: string;
+  readonly title: string;
+  readonly contact: ContactInfo;
+  readonly skills?: readonly ResumeSkill[];
+  readonly languages: readonly Language[];
 }
 
-interface Experience {
-  jobTitle: string;
-  company: string;
-  date: string;
-  description: string[];
+export interface Experience {
+  readonly jobTitle: string;
+  readonly company: string;
+  readonly date: string;
+  readonly description: readonly string[];
 }
 
-interface EducationDetail {
-  text: string;
-  bold?: boolean;
+export interface EducationDetail {
+  readonly text: string;
+  readonly bold?: boolean;
 }
 
-interface Education {
-  degree: string;
-  school: string;
-  date: string;
-  details: EducationDetail[][];
+export interface Education {
+  readonly degree: string;
+  readonly school: string;
+  readonly date: string;
+  readonly details: readonly (readonly EducationDetail[])[];
 }
 
-interface Certification {
-  name: string;
-  issuer: string;
-  year: number;
+export interface Certification {
+  readonly name: string;
+  readonly issuer: string;
+  readonly year: number;
 }
 
 export interface ResumeData {
-  personal: PersonalInfo;
-  summary: string;
-  experience: Experience[];
-  education: Education[];
-  certifications: Certification[];
+  readonly personal: PersonalInfo;
+  readonly summary: string;
+  readonly experience: readonly Experience[];
+  readonly education: readonly Education[];
+  readonly certifications: readonly Certification[];
 }

@@ -1,37 +1,57 @@
 <script setup lang="ts">
 import { ref } from "vue";
-
-// Define interface inline to avoid Vue SFC compiler fs resolution limitations in Astro builds
-interface ContactFormState {
-  success: boolean;
-  message: string;
-  errors?: { fullname?: string; email?: string; message?: string };
-}
+import type { ContactFormState } from "@/types";
 
 const mapLoaded = ref(false);
 const isPending = ref(false);
 const state = ref<ContactFormState>({ success: false, message: "" });
 
-const loadMap = () => {
+const loadMap = (): void => {
   mapLoaded.value = true;
 };
 
-const handleSubmit = async (e: Event) => {
+const isContactFormState = (value: unknown): value is ContactFormState => {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+  return (
+    "success" in value
+    && typeof value.success === "boolean"
+    && "message" in value
+    && typeof value.message === "string"
+  );
+};
+
+const handleSubmit = async (e: Event): Promise<void> => {
   e.preventDefault();
   isPending.value = true;
   state.value = { success: false, message: "" };
 
-  const form = e.currentTarget as HTMLFormElement;
+  const form = e.currentTarget;
+  if (!(form instanceof HTMLFormElement)) {
+    isPending.value = false;
+    return;
+  }
+
   const formData = new FormData(form);
 
   try {
     const response = await fetch("/api/contact", { method: "POST", body: formData });
-    const data = await response.json();
-    state.value = data;
-    if (response.ok && data.success) {
-      form.reset();
+    const rawData: unknown = await response.json();
+    if (isContactFormState(rawData)) {
+      state.value = rawData;
+      if (response.ok && rawData.success) {
+        form.reset();
+      }
+    } else {
+      state.value = {
+        success: false,
+        message: "Invalid response received. Please try again later.",
+      };
     }
-  } catch {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    console.error("Contact form submission error:", errorMessage);
     state.value = { success: false, message: "Failed to send message. Please try again later." };
   } finally {
     isPending.value = false;

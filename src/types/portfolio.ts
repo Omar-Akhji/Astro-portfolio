@@ -1,43 +1,62 @@
 export interface Service {
-  icon: string;
-  title: string;
-  description: string;
+  readonly id?: string;
+  readonly icon: string;
+  readonly title: string;
+  readonly description: string;
 }
 
 export interface Testimonial {
-  name: string;
-  avatar: string;
-  text: string;
-  date: string;
+  readonly id: string;
+  readonly name: string;
+  readonly avatar: string;
+  readonly text: string;
+  readonly date: string;
 }
 
 export interface Project {
-  title: string;
-  category: string;
-  image: string;
+  readonly title: string;
+  readonly category: string;
+  readonly image: string;
+  readonly github?: string | null;
+  readonly live?: string | null;
+  readonly order?: number;
+  readonly tags?: readonly string[];
+  readonly description?: string;
 }
 
 export interface SkillBar {
-  name: string;
-  percentage: number;
+  readonly id?: string;
+  readonly name: string;
+  readonly percentage: number;
 }
 
 export interface TimelineItem {
-  title: string;
-  period: string;
-  description: string;
+  readonly id?: string;
+  readonly title: string;
+  readonly period: string;
+  readonly description: string;
 }
 
 export interface BlogPost {
-  title: string;
-  category: string;
-  date: string;
-  dateTime: string;
-  image: string;
-  text: string;
+  readonly title: string;
+  readonly category: string;
+  readonly date: string;
+  readonly dateTime: string;
+  readonly image: string | { readonly src: string };
+  readonly text: string;
+  readonly tags?: readonly string[];
 }
 
 export interface Client {
-  logo: string;
-  alt: string;
+  readonly id?: string;
+  readonly logo: string;
+  readonly alt: string;
+}
+
+export interface LanguageSkill {
+  readonly id?: string;
+  readonly name: string;
+  readonly level: string;
+  readonly order?: number;
+  readonly url?: string;
 }

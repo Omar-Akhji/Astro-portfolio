@@ -1,9 +1,24 @@
-import type { PluginConfig } from "@ianvs/prettier-plugin-sort-imports";
+import type { PluginConfig as SortImportsPluginConfig } from "@ianvs/prettier-plugin-sort-imports";
 import type { Config } from "prettier";
-import type { PluginOptions } from "prettier-plugin-tailwindcss";
+import type { PluginOptions as TailwindPluginOptions } from "prettier-plugin-tailwindcss";
 
-const config: Config & PluginOptions & PluginConfig = {
-  // ─── Core formatting ──────────────────────────────────────────────────────
+/**
+ * Modern 2026 Prettier Configuration for Astro, Vue 3, Tailwind CSS v4, and TypeScript.
+ *
+ * Fully typed config combining core Prettier, Tailwind v4 class sorting, natural Feature-Sliced
+ * Design import sorting, and Astro language service utilities.
+ */
+type PrettierConfig = Config
+  & TailwindPluginOptions
+  & SortImportsPluginConfig & {
+    /** Astro organize imports mode ('All' | 'SortAndCombine' | 'RemoveUnused') */
+    astroOrganizeImportsMode?: "All" | "SortAndCombine" | "RemoveUnused";
+    /** Whether to organize imports within <script> tags inside Astro templates */
+    astroOrganizeImportsInScriptTags?: boolean;
+  };
+
+const config: PrettierConfig = {
+  // ─── Core Formatting ──────────────────────────────────────────────────────
   printWidth: 100,
   tabWidth: 2,
   useTabs: false,
@@ -17,34 +32,32 @@ const config: Config & PluginOptions & PluginConfig = {
   arrowParens: "always",
   endOfLine: "lf",
 
-  // ─── HTML / Markup ────────────────────────────────────────────────────────
-  // Respect CSS display rules for whitespace (correct for Tailwind projects)
+  // ─── HTML & Template Formatting ───────────────────────────────────────────
+  // Respect CSS display rules for whitespace (critical for Tailwind inline elements)
   htmlWhitespaceSensitivity: "css",
-  // One attribute per line for readability in JSX/HTML
+  // One attribute per line for clean git diffs and visual clarity
   singleAttributePerLine: true,
   // Always wrap prose in markdown
   proseWrap: "always",
-  // Format embedded code blocks (e.g. ```ts in markdown)
+  // Format embedded code blocks in markdown or template literals
   embeddedLanguageFormatting: "auto",
 
-  // ─── Experimental (Prettier 3.x) ──────────────────────────────────────────
-  // Cleaner ternary formatting: condition
-  //   ? consequent
-  //   : alternate
+  // ─── Modern & Experimental Syntax Features ────────────────────────────────
+  // Curious ternaries formatting: condition ? consequent : alternate
   experimentalTernaries: true,
-  // Collapse object wrapping — keeps short objects on one line
+  // Collapse short object wrapping on single lines when under printWidth
   objectWrap: "collapse",
-  // Operators go at the start of new lines (aligns with math conventions)
+  // Operators go at the start of new lines (math convention)
   experimentalOperatorPosition: "start",
 
-  // ─── Plugins ──────────────────────────────────────────────────────────────
-  // ORDER IS CRITICAL:
-  // 1. prettier-plugin-packagejson    — sorts package.json keys
-  // 2. @ianvs/prettier-plugin-sort-imports — sorts import statements
-  // 3. prettier-plugin-jsdoc          — formats JSDoc comments
-  // 4. prettier-plugin-astro          — must come before tailwindcss
-  // 5. prettier-plugin-tailwindcss    — must come last for class sorting
-  // 6. prettier-plugin-astro-organize-imports — MUST come last (per its docs)
+  // ─── Plugin Pipeline ──────────────────────────────────────────────────────
+  // Strict execution order to ensure parser wrapping and class sorting succeed:
+  // 1. package.json key sorter
+  // 2. Import statement organizer
+  // 3. JSDoc comment formatter
+  // 4. Astro parser & printer
+  // 5. Tailwind v4 class sorter (must wrap astro printer)
+  // 6. Astro organize imports (must be loaded last per plugin docs)
   plugins: [
     "prettier-plugin-packagejson",
     "@ianvs/prettier-plugin-sort-imports",
@@ -54,57 +67,61 @@ const config: Config & PluginOptions & PluginConfig = {
     "prettier-plugin-astro-organize-imports",
   ],
 
-  // ─── Import sorting (@ianvs/prettier-plugin-sort-imports) ─────────────────
+  // ─── Import Sorting (@ianvs/prettier-plugin-sort-imports) ───────────────────
   importOrder: [
-    // React core first
-    "^(react/(.*)$)|^(react$)",
+    // 1. Framework core
+    "^(astro(/.*)?|astro:.*)$",
+    "^(vue(/.*)?)$",
+    "",
+    // 2. Node.js built-ins
+    "<BUILTIN_MODULES>",
+    "",
+    // 3. Third-party packages
     "<THIRD_PARTY_MODULES>",
-    // Astro/framework internals
-    "^(astro/(.*)$)|^(astro$)",
-    // Path aliases
+    "",
+    // 4. Type imports (explicitly isolated)
+    "<TYPES>",
+    "<TYPES>^[.]",
+    "",
+    // 5. Internal module aliases
     "^@/(.*)$",
     "^@components/(.*)$",
     "^@layouts/(.*)$",
+    "^@sections/(.*)$",
+    "^@features/(.*)$",
+    "^@ui/(.*)$",
+    "^@data/(.*)$",
+    "^@type/(.*)$",
+    "^@scripts/(.*)$",
     "^@assets/(.*)$",
-    "^@utils/(.*)$",
-    // Relative imports
+    "",
+    // 6. Relative local module imports
     "^[./]",
-    // CSS always last
+    "",
+    // 7. Stylesheets (always last to preserve CSS cascade)
     String.raw`^.+\.css$`,
   ],
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
-  // Match your TypeScript version
   importOrderTypeScriptVersion: "6.0.0",
-  // Case-insensitive sorting
   importOrderCaseSensitive: false,
 
-  // ─── Tailwind CSS v4 ──────────────────────────────────────────────────────
-  // Required for Tailwind v4 — point to your CSS entry point
+  // ─── Tailwind CSS v4 Integration ──────────────────────────────────────────
+  // Path to main CSS entry point containing @import "tailwindcss"
   tailwindStylesheet: "./src/styles/globals.css",
-  // Custom functions that accept Tailwind classes (cn, cva, clsx, twMerge)
+  // Custom helper functions receiving Tailwind utility classes
   tailwindFunctions: ["cn", "cva", "clsx", "twMerge"],
 
-  // ─── Astro organize imports ───────────────────────────────────────────────
-  // "All" = sort, combine, and remove unused imports in .astro files
+  // ─── Astro Language Service Import Organization ───────────────────────────
   astroOrganizeImportsMode: "All",
+  astroOrganizeImportsInScriptTags: true,
 
-  // ─── File overrides ───────────────────────────────────────────────────────
+  // ─── Language-Specific Overrides ──────────────────────────────────────────
   overrides: [
-    {
-      // Astro parser for .astro files
-      files: "*.astro",
-      options: { parser: "astro" },
-    },
-    {
-      // Tighter width for JSON
-      files: ["*.json", "*.jsonc"],
-      options: { printWidth: 80 },
-    },
-    {
-      // Markdown — preserve intentional line breaks
-      files: ["*.md", "*.mdx"],
-      options: { proseWrap: "always" },
-    },
+    { files: "*.astro", options: { parser: "astro" } },
+    { files: ["*.json", "*.jsonc"], options: { printWidth: 80 } },
+    { files: ["*.md", "*.mdx"], options: { proseWrap: "always" } },
+    { files: ["*.svg"], options: { parser: "html" } },
+    { files: ["*.yml", "*.yaml"], options: { singleQuote: false, tabWidth: 2 } },
   ],
 };
 

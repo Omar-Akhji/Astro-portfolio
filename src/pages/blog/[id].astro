@@ -1,15 +1,21 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import PageWrapper from "@components/ui/PageWrapper.astro";
+import type { CollectionEntry } from "astro:content";
 import { getCollection, render } from "astro:content";
 
-export async function getStaticPaths() {
+interface StaticPathItem {
+  readonly params: { readonly id: string };
+  readonly props: { readonly post: CollectionEntry<"blog"> };
+}
+
+export async function getStaticPaths(): Promise<readonly StaticPathItem[]> {
   const posts = await getCollection("blog");
-  return posts.map((post) => ({
-    params: { id: post.id },
-    props: { post },
-    cacheKey: (post as { digest?: string }).digest,
-  }));
+  return posts.map((post): StaticPathItem => ({ params: { id: post.id }, props: { post } }));
+}
+
+interface Props {
+  readonly post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props;
@@ -174,7 +180,7 @@ const readingTime = Math.max(1, Math.round(wordCount / 200));
                 </svg>
                 Tags:
               </span>
-              {post.data.tags.map((tag: unknown) => (
+              {post.data.tags.map((tag: string) => (
                 <span class="rounded-lg border-2 bg-white/5 px-2.5 py-1 text-xs text-text-muted transition-colors hover:bg-white/10 hover:text-text">
                   #{tag}
                 </span>

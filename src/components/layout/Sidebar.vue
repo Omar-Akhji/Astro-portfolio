@@ -1,20 +1,26 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-// Define interface inline to avoid Vue SFC compiler fs resolution limitations in Astro builds
-interface PersonalInfo {
-  initials: string;
-  name: string;
-  title: string;
-  contact: { email: string; phone: string; location: string; linkedin: string; github: string };
-  languages: Array<{ name: string; level: string }>;
+// Defined in SFC to satisfy @astrojs/vue compiler-sfc prop generation constraint
+interface Props {
+  readonly initials: string;
+  readonly name: string;
+  readonly title: string;
+  readonly contact: {
+    readonly email: string;
+    readonly phone: string;
+    readonly location: string;
+    readonly linkedin: string;
+    readonly github: string;
+  };
+  readonly languages: readonly { readonly name: string; readonly level: string }[];
 }
 
-defineProps<PersonalInfo>();
+defineProps<Props>();
 
 const isActive = ref(false);
 
-const toggleActive = () => {
+const toggleActive = (): void => {
   isActive.value = !isActive.value;
 };
 </script>

@@ -11,7 +11,7 @@ let ringY = 0;
 
 let rafId = 0;
 
-const onMouseMove = (e: MouseEvent) => {
+const onMouseMove = (e: MouseEvent): void => {
   mouseX = e.clientX;
   mouseY = e.clientY;
 
@@ -20,7 +20,7 @@ const onMouseMove = (e: MouseEvent) => {
   }
 };
 
-const animRing = () => {
+const animRing = (): void => {
   ringX += (mouseX - ringX) * 0.14;
   ringY += (mouseY - ringY) * 0.14;
 

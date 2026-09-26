@@ -1,25 +1,26 @@
 <script setup lang="ts">
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
 
+// Defined in SFC to satisfy @astrojs/vue compiler-sfc prop generation constraint
 interface Testimonial {
-  id: string;
-  name: string;
-  avatar: string;
-  text: string;
-  date: string;
+  readonly id: string;
+  readonly name: string;
+  readonly avatar: string;
+  readonly text: string;
+  readonly date: string;
 }
 
-const props = defineProps<{ testimonials: Testimonial[] }>();
+const props = defineProps<{ readonly testimonials: readonly Testimonial[] }>();
 
 const activeTestimonial = ref<number | null>(null);
 const dialogRef = ref<HTMLDialogElement | null>(null);
 
-const selectedTestimonial = computed(() => {
+const selectedTestimonial = computed<Testimonial | null>((): Testimonial | null => {
   if (activeTestimonial.value === null) return null;
-  return props.testimonials[activeTestimonial.value] || null;
+  return props.testimonials[activeTestimonial.value] ?? null;
 });
 
-watch(activeTestimonial, (newVal) => {
+watch(activeTestimonial, (newVal: number | null): void => {
   const dialog = dialogRef.value;
   if (!dialog) return;
   if (newVal !== null && !dialog.open) {
@@ -29,13 +30,23 @@ watch(activeTestimonial, (newVal) => {
   }
 });
 
-const openTestimonial = (idx: number) => {
+const openTestimonial = (idx: number): void => {
   activeTestimonial.value = idx;
 };
 
-const closeTestimonial = () => {
+const closeTestimonial = (): void => {
   activeTestimonial.value = null;
 };
+
+onMounted(() => {
+  const dialog = dialogRef.value;
+  if (!dialog) return;
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) {
+      closeTestimonial();
+    }
+  });
+});
 </script>
 
 <template>
@@ -87,9 +98,8 @@ const closeTestimonial = () => {
       ref="dialogRef"
       class="fixed inset-0 m-auto h-max max-h-[90vh] w-max max-w-[min(90vw,32rem)] scale-95 scrollbar-none overflow-y-auto overscroll-contain rounded-[0.875rem] border-2 border-glass-border bg-bg p-0 text-text opacity-0 shadow-5 transition-[opacity,transform,overlay,display] duration-250 ease-in-out backdrop:bg-black/80 backdrop:backdrop-blur-sm backdrop:transition-[background-color,backdrop-filter,overlay,display] backdrop:duration-250 backdrop:ease-in-out open:scale-100 open:opacity-100 starting:open:scale-95 starting:open:opacity-0"
       aria-label="Testimonial details"
+      @cancel="closeTestimonial"
       @close="closeTestimonial"
-      @click.self="closeTestimonial"
-      @keydown.escape="closeTestimonial"
     >
       <div
         v-if="selectedTestimonial"

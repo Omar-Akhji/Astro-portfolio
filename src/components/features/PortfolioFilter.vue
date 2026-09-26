@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 
-// Define interface inline to avoid Vue SFC compiler fs resolution limitations in Astro builds
+// Defined in SFC to satisfy @astrojs/vue compiler-sfc prop generation constraint
 interface Project {
-  title: string;
-  category: string;
-  image: string;
+  readonly title: string;
+  readonly category: string;
+  readonly image: string;
 }
 
-const props = defineProps<{ projects: Project[]; categories: string[] }>();
+const props = defineProps<{
+  readonly projects: readonly Project[];
+  readonly categories: readonly string[];
+}>();
 
 const activeCategory = ref("All");
 
@@ -18,25 +21,26 @@ onMounted(() => {
   }
 
   const params = new URLSearchParams(globalThis.location.search);
-  const cat = params.get("category") || "All";
+  const cat = params.get("category") ?? "All";
   activeCategory.value = cat;
 });
 
-const handleCategoryChange = (category: string) => {
+const handleCategoryChange = (category: string): void => {
   activeCategory.value = category;
-  if (typeof window !== "undefined") {
-    const params = new URLSearchParams(globalThis.location.search);
-    if (category === "All") {
-      params.delete("category");
-    } else {
-      params.set("category", category);
-    }
-    const newUrl = `${globalThis.location.pathname}${params.toString() ? "?" + params.toString() : ""}`;
-    globalThis.history.pushState({}, "", newUrl);
+  if (typeof window === "undefined") {
+    return;
   }
+  const params = new URLSearchParams(globalThis.location.search);
+  if (category === "All") {
+    params.delete("category");
+  } else {
+    params.set("category", category);
+  }
+  const newUrl = `${globalThis.location.pathname}${params.toString() ? "?" + params.toString() : ""}`;
+  globalThis.history.pushState({}, "", newUrl);
 };
 
-const filteredProjects = computed(() => {
+const filteredProjects = computed<readonly Project[]>((): readonly Project[] => {
   return props.projects.filter(
     (project) => activeCategory.value === "All" || project.category === activeCategory.value,
   );
