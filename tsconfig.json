@@ -17,7 +17,7 @@
   "compilerOptions": {
     // ─── Target & Lib ──────────────────────────────────────────────────────
     "target": "ESNext",
-    "lib": ["ES2023", "ESNext", "DOM", "DOM.Iterable"],
+    "lib": ["ES2025", "ESNext", "DOM", "DOM.Iterable"],
     "ignoreDeprecations": "6.0",
 
     // ─── JSX Preservation ────────────────────────────────────────────────
