@@ -3,6 +3,7 @@ node_modules/
 
 # Build and cache outputs
 dist/
+.vercel/
 .astro/
 coverage/
 .temp/

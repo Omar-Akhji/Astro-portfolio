@@ -1,7 +1,7 @@
 // @ts-check
 import mdx from "@astrojs/mdx";
-import node from "@astrojs/node";
 import sitemap, { ChangeFreqEnum } from "@astrojs/sitemap";
+import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
@@ -11,7 +11,7 @@ const siteUrl = process.env["SITE_URL"] || "https://omarakhji.dev";
 export default defineConfig({
   site: siteUrl,
   trailingSlash: "ignore",
-  adapter: node({ mode: "standalone" }),
+  adapter: vercel(),
   experimental: { incrementalBuild: true },
   integrations: [
     mdx(),
