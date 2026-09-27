@@ -20,8 +20,8 @@ export default defineConfig({
       changefreq: ChangeFreqEnum.WEEKLY,
       priority: 0.8,
       serialize(item) {
-        if (item.url === `${siteUrl}/` || item.url === `${siteUrl}`) {
-          item.priority = 1.0;
+        if (item.url === `${siteUrl}/` || item.url === String(siteUrl)) {
+          item.priority = 1;
           item.changefreq = ChangeFreqEnum.WEEKLY;
         } else if (item.url.includes("/blog")) {
           item.priority = 0.9;
