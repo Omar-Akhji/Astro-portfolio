@@ -167,7 +167,7 @@ const eslintConfig = defineConfig(
       // Flexible typing for Astro dynamic layout components
       "@typescript-eslint/no-unsafe-assignment": "off",
       // Standard Astro props contract
-      "unicorn/name-replacements": ["error", { allowList: { Props: true } }],
+      "unicorn/name-replacements": ["error", { allowList: { Props: true, props: true } }],
       // Security & CSP boundaries
       "astro/no-set-html-directive": "error",
       "astro/no-unsafe-inline-scripts": ["error", { allowModuleScripts: true }],

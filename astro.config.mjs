@@ -10,7 +10,7 @@ const siteUrl = process.env["SITE_URL"] || "https://omarakhji.dev";
 // https://astro.build/config
 export default defineConfig({
   site: siteUrl,
-  trailingSlash: "always",
+  trailingSlash: "ignore",
   adapter: node({ mode: "standalone" }),
   experimental: { incrementalBuild: true },
   integrations: [

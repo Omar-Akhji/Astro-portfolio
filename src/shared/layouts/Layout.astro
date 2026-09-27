@@ -15,8 +15,6 @@ import SEO from "@shared/seo/SEO.astro";
 import type { SeoProps } from "@shared/types/seo";
 
 interface Props extends SeoProps {}
-
-const props = Astro.props;
 ---
 
 <!doctype html>
@@ -44,7 +42,7 @@ const props = Astro.props;
       name="generator"
     />
 
-    <SEO {...props} />
+    <SEO {...Astro.props} />
     <ClientRouter />
 
     <link

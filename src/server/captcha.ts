@@ -13,17 +13,17 @@ const MAX_TTL_MS = 30 * 60 * 1000;
 
 setInterval(() => {
   const now = Date.now();
-  for (const [nonce, time] of consumedNonces.entries()) {
+  for (const [nonce, time] of consumedNonces) {
     if (now - time > MAX_TTL_MS) {
       consumedNonces.delete(nonce);
     }
   }
-  for (const [token, time] of consumedTokens.entries()) {
+  for (const [token, time] of consumedTokens) {
     if (now - time > MAX_TTL_MS) {
       consumedTokens.delete(token);
     }
   }
-}, CLEANUP_INTERVAL_MS).unref?.();
+}, CLEANUP_INTERVAL_MS).unref();
 
 const signPayload = (payload: string): string => {
   return crypto.createHmac("sha256", RUNTIME_SECRET).update(payload).digest("hex");
@@ -52,7 +52,7 @@ export interface VerificationResult {
 export const generateCaptchaChallenge = (): CaptchaChallenge => {
   const nonce = crypto.randomBytes(16).toString("hex");
   const timestamp = Date.now();
-  const signature = signPayload(`${nonce}:${timestamp}`);
+  const signature = signPayload(`${nonce}:${timestamp.toString()}`);
 
   return { nonce, timestamp, signature };
 };
@@ -73,7 +73,7 @@ export const verifyCaptchaChallenge = (
     return { valid: false, error: "Invalid challenge parameters provided." };
   }
 
-  const expectedSig = signPayload(`${nonce}:${timestamp}`);
+  const expectedSig = signPayload(`${nonce}:${timestamp.toString()}`);
   if (!safeCompare(expectedSig, signature)) {
     return { valid: false, error: "Challenge signature verification failed." };
   }

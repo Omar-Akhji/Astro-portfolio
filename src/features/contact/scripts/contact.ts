@@ -66,7 +66,6 @@ export const setupContactPage = (): void => {
   const captchaSubtext = document.querySelector<HTMLSpanElement>("#captcha-subtext");
   const captchaTokenInput = document.querySelector<HTMLInputElement>("#captcha-token");
   const captchaError = document.querySelector<HTMLParagraphElement>("#captcha-error");
-  const captchaGlow = document.querySelector<HTMLDivElement>("#captcha-glow");
 
   if (
     !form
@@ -97,6 +96,8 @@ export const setupContactPage = (): void => {
     return;
   }
 
+  const captchaGlow = document.querySelector<HTMLDivElement>("#captcha-glow");
+
   // ── Captcha State & Logic ──
   interface ChallengeData {
     readonly nonce: string;
@@ -120,18 +121,21 @@ export const setupContactPage = (): void => {
     captchaWidget.classList.remove("border-red-500/50");
   };
 
-  const fetchChallenge = async (): Promise<void> => {
+  const fetchChallenge = async (): Promise<ChallengeData | null> => {
     try {
       const res = await fetch("/api/captcha/challenge");
       if (!res.ok) {
-        return;
+        return null;
       }
       const data = (await res.json()) as { success: boolean; challenge?: ChallengeData };
       if (data.success && data.challenge) {
         currentChallenge = data.challenge;
+        return data.challenge;
       }
-    } catch (err: unknown) {
-      console.warn("Failed to initialize security challenge:", err);
+      return null;
+    } catch (error: unknown) {
+      console.warn("Failed to initialize security challenge:", error);
+      return null;
     }
   };
 
@@ -175,8 +179,8 @@ export const setupContactPage = (): void => {
     }
 
     if (!currentChallenge) {
-      await fetchChallenge();
-      if (!currentChallenge) {
+      const challenge = await fetchChallenge();
+      if (!challenge) {
         showCaptchaError("Unable to initialize security challenge. Please try again.");
         return;
       }
@@ -238,8 +242,8 @@ export const setupContactPage = (): void => {
       } else {
         throw new Error(data.message || "Verification failed");
       }
-    } catch (err: unknown) {
-      console.error("Captcha verification error:", err);
+    } catch (error: unknown) {
+      console.error("Captcha verification error:", error);
       resetCaptcha(false);
       showCaptchaError("Verification failed. Click to try again.");
       void fetchChallenge();
@@ -253,10 +257,11 @@ export const setupContactPage = (): void => {
   });
 
   captchaBtn.addEventListener("keydown", (e: KeyboardEvent): void => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      void handleVerify();
+    if (e.key !== "Enter" && e.key !== " ") {
+      return;
     }
+    e.preventDefault();
+    void handleVerify();
   });
 
   // Pre-fetch challenge
@@ -267,9 +272,7 @@ export const setupContactPage = (): void => {
     fullnameInput.disabled = pending;
     emailInput.disabled = pending;
     messageInput.disabled = pending;
-    if (captchaBtn) {
-      captchaBtn.disabled = pending;
-    }
+    captchaBtn.disabled = pending;
 
     if (pending) {
       submitSpinner.classList.remove("hidden");
