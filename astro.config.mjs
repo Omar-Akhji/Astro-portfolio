@@ -1,5 +1,4 @@
 // @ts-check
-import mdx from "@astrojs/mdx";
 import sitemap, { ChangeFreqEnum } from "@astrojs/sitemap";
 import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
@@ -14,7 +13,6 @@ export default defineConfig({
   adapter: vercel(),
   experimental: { incrementalBuild: true },
   integrations: [
-    mdx(),
     sitemap({
       filter: (page) => !page.includes("/api/") && !page.includes("/404"),
       changefreq: ChangeFreqEnum.WEEKLY,
