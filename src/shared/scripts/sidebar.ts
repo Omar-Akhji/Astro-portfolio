@@ -26,7 +26,7 @@ const setupSidebar = (): void => {
     toggleLabel.textContent = nextState ? "Hide Contacts" : "Show Contacts";
 
     if (nextState) {
-      aside.classList.remove("max-block-28", "sm:max-block-45");
+      aside.classList.remove("max-block-32", "sm:max-block-48");
       aside.classList.add("max-block-375");
 
       details.classList.remove("invisible", "opacity-0");
@@ -36,7 +36,7 @@ const setupSidebar = (): void => {
       iconDown.classList.add("hidden");
     } else {
       aside.classList.remove("max-block-375");
-      aside.classList.add("max-block-28", "sm:max-block-45");
+      aside.classList.add("max-block-32", "sm:max-block-48");
 
       details.classList.remove("visible", "opacity-100");
       details.classList.add("invisible", "opacity-0");

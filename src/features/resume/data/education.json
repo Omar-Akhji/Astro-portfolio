@@ -1,18 +1,21 @@
 [
   {
-    "id": "um5-economics",
+    "id": "1-um5-economics",
+    "order": 1,
     "title": "Mohammed V University in Rabat, Faculty of Legal, Economic and Social Sciences",
     "period": "2020 — 2023",
     "description": "baccalaureate +1 on Economy and Management"
   },
   {
-    "id": "um5-science",
+    "id": "2-um5-science",
+    "order": 2,
     "title": "Mohammed V University in Rabat, Faculty of Science",
     "period": "2019 — 2020",
     "description": "First year of the bachelor's degree in Physics and Chemistry"
   },
   {
-    "id": "abdrahmand-highschool",
+    "id": "3-abdrahmand-highschool",
+    "order": 3,
     "title": "Abdrahmand El Dakhel High school",
     "period": "2016 — 2019",
     "description": "High School degree of Physics and Chemistry"

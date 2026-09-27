@@ -75,6 +75,7 @@ const education = defineCollection({
     title: z.string(),
     period: z.string(),
     description: z.string(),
+    order: z.number().optional(),
   }),
 });
 

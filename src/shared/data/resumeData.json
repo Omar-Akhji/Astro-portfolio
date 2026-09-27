@@ -1,5 +1,6 @@
 {
   "personal": {
+    "avatar": "/assets/avatar/avatar.png",
     "initials": "OA",
     "name": "Omar Akhji",
     "title": "Full Stack Web Developer",
@@ -56,20 +57,20 @@
   ],
   "education": [
     {
-      "degree": "Baccalaureate +1 in Economy and Management",
+      "degree": "baccalaureate +1 on Economy and Management",
       "school": "Mohammed V University in Rabat, Faculty of Legal, Economic and Social Sciences",
       "date": "2020 — 2023",
       "details": [[{ "text": "Souissi Campus, Rabat" }]]
     },
     {
-      "degree": "First Year Bachelor's in Physics and Chemistry",
+      "degree": "First year of the bachelor's degree in Physics and Chemistry",
       "school": "Mohammed V University in Rabat, Faculty of Science",
       "date": "2019 — 2020",
       "details": [[{ "text": "Scientific Track" }]]
     },
     {
-      "degree": "High School Degree — Physics and Chemistry",
-      "school": "Abdrahmand El Dakhel High School",
+      "degree": "High School degree of Physics and Chemistry",
+      "school": "Abdrahmand El Dakhel High school",
       "date": "2016 — 2019",
       "details": [[{ "text": "Baccalaureate in Physical Sciences" }]]
     }

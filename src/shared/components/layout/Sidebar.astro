@@ -1,5 +1,6 @@
 ---
 interface Props {
+  readonly avatar?: string;
   readonly initials: string;
   readonly name: string;
   readonly title: string;
@@ -13,7 +14,7 @@ interface Props {
   readonly languages: readonly { readonly name: string; readonly level: string }[];
 }
 
-const { initials, name, title, contact, languages } = Astro.props;
+const { avatar, initials, name, title, contact, languages } = Astro.props;
 const nameParts = name.split(" ");
 const firstName = nameParts[0] ?? "";
 const lastName = nameParts.slice(1).join(" ");
@@ -22,20 +23,33 @@ const lastName = nameParts.slice(1).join(" ");
 <div class="relative z-1 mbe-4 w-full min-w-70 sm:mbe-8 xl:sticky xl:top-15 xl:mx-0 xl:mbe-0 xl:w-auto xl:max-w-none xl:block-full xl:inline-auto xl:max-block-max">
   <aside
     id="sidebar-aside"
-    class="max-block-28 sm:max-block-45 overflow-hidden rounded-card border-2 border-glass-border bg-bg p-4 shadow-1 transition-all duration-500 ease-in-out sm:p-8 lg:shadow-5 xl:pbs-15 xl:block-full xl:max-block-max"
+    class="max-block-32 sm:max-block-48 overflow-hidden rounded-card border-2 border-glass-border bg-bg p-4 shadow-1 transition-all duration-500 ease-in-out sm:p-8 lg:shadow-5 xl:pbs-15 xl:block-full xl:max-block-max"
   >
     <!-- ── Sidebar Info Row ── -->
     <header class="relative flex items-center justify-start gap-4 sm:gap-6 xl:flex-col">
       <!-- Avatar -->
-      <div class="flex size-20 shrink-0 items-center justify-center rounded-full border-4 border-[#C0C0C0] bg-linear-to-r from-violet to-blueviolet text-[1.25rem] font-bold text-bg shadow-2 drop-shadow-lg transition-transform sm:size-30 sm:text-[2.25rem] xl:mx-auto xl:size-37.5 xl:text-[3rem] pointer-fine:hover:scale-105">
-        {initials}
+      <div class="relative flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-full border-4 border-[#C0C0C0] bg-linear-to-r from-violet to-blueviolet shadow-2 drop-shadow-lg sm:size-32 xl:mx-auto xl:size-44">
+        {avatar ? (
+          <img
+            alt={name}
+            class="size-full object-cover object-top"
+            decoding="async"
+            height="176"
+            loading="eager"
+            src={avatar}
+            width="176"
+          />
+        ) : (
+          <span class="text-[1.5rem] font-bold text-bg sm:text-[2.5rem] xl:text-[3.5rem]">
+            {initials}
+          </span>
+        )}
       </div>
 
       <!-- Name & Title -->
       <div class="xl:text-center">
         <p class="mbe-2 bg-radial-[at_center_top] from-indigo to-blueviolet bg-clip-text text-[1.0625rem] font-medium tracking-tight text-transparent uppercase sm:mbe-4 sm:text-[1.625rem] xl:whitespace-nowrap">
-          {firstName}
-          <span class="font-extrabold">{lastName}</span>
+          {firstName}{" "}<span class="font-extrabold">{lastName}</span>
         </p>
         <p class="w-max rounded-full bg-white/8 px-3 py-0.5 text-[0.6875rem] font-light text-text sm:px-4.5 sm:py-1 sm:text-xs xl:mx-auto">
           {title}
