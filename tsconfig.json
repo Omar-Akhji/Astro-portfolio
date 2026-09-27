@@ -77,12 +77,9 @@
     // ─── Path aliases ──────────────────────────────────────────────────────
     "paths": {
       "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@layouts/*": ["./src/layouts/*"],
-      "@data/*": ["./src/data/*"],
-      "@lib/*": ["./src/lib/*"],
+      "@features/*": ["./src/features/*"],
+      "@shared/*": ["./src/shared/*"],
       "@type/*": ["./src/types/*"],
-      "@scripts/*": ["./src/scripts/*"],
       "@assets/*": ["./src/assets/*"]
     }
   }

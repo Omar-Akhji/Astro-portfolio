@@ -32,7 +32,7 @@ const projects = defineCollection({
 });
 
 const services = defineCollection({
-  loader: file("src/data/services.json"),
+  loader: file("src/features/about/data/services.json"),
   schema: z.object({
     id: z.string(),
     icon: z.string(),
@@ -42,7 +42,7 @@ const services = defineCollection({
 });
 
 const testimonials = defineCollection({
-  loader: file("src/data/testimonials.json"),
+  loader: file("src/features/about/data/testimonials.json"),
   schema: z.object({
     id: z.string(),
     name: z.string(),
@@ -53,22 +53,23 @@ const testimonials = defineCollection({
 });
 
 const languages = defineCollection({
-  loader: file("src/data/languages.json"),
+  loader: file("src/features/about/data/languages.json"),
   schema: z.object({
     id: z.string(),
     name: z.string(),
     order: z.number().optional(),
-    url: z.string(),
+    url: z.string().optional(),
+    icon: z.string().optional(),
   }),
 });
 
 const clients = defineCollection({
-  loader: file("src/data/clients.json"),
+  loader: file("src/features/about/data/clients.json"),
   schema: z.object({ id: z.string(), logo: z.string(), alt: z.string() }),
 });
 
 const education = defineCollection({
-  loader: file("src/data/education.json"),
+  loader: file("src/features/resume/data/education.json"),
   schema: z.object({
     id: z.string(),
     title: z.string(),
@@ -78,7 +79,7 @@ const education = defineCollection({
 });
 
 const experience = defineCollection({
-  loader: file("src/data/experience.json"),
+  loader: file("src/features/resume/data/experience.json"),
   schema: z.object({
     id: z.string(),
     title: z.string(),
@@ -88,7 +89,7 @@ const experience = defineCollection({
 });
 
 const skills = defineCollection({
-  loader: file("src/data/skills.json"),
+  loader: file("src/features/resume/data/skills.json"),
   schema: z.object({ id: z.string(), name: z.string(), percentage: z.number() }),
 });
 

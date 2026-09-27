@@ -1,6 +1,6 @@
 ---
-import PortfolioFilter from "@components/features/PortfolioFilter.astro";
-import PageWrapper from "@components/ui/PageWrapper.astro";
+import PortfolioFilter from "./PortfolioFilter.astro";
+import PageWrapper from "@shared/components/ui/PageWrapper.astro";
 import { getCollection } from "astro:content";
 
 const projects = await getCollection("projects");

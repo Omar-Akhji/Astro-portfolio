@@ -1,6 +1,6 @@
 ---
-import Layout from "@layouts/Layout.astro";
-import PageWrapper from "@components/ui/PageWrapper.astro";
+import Layout from "@shared/layouts/Layout.astro";
+import PageWrapper from "@shared/components/ui/PageWrapper.astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection, render } from "astro:content";
 
@@ -24,11 +24,31 @@ const { Content } = await render(post);
 // Calculate reading time
 const wordCount = post.body ? post.body.split(/\s+/).length : 0;
 const readingTime = Math.max(1, Math.round(wordCount / 200));
+const articleImage =
+  typeof post.data.image === "string" ? post.data.image : post.data.image.src;
 ---
 
 <Layout
   description={post.data.text}
-  title={`${post.data.title} | Blog | Omar Akhji`}
+  extraSchema={{
+    "@type": "BlogPosting",
+    headline: post.data.title,
+    description: post.data.text,
+    datePublished: post.data.dateTime,
+    keywords: post.data.tags.join(", "),
+    articleSection: post.data.category,
+    image: articleImage,
+    author: {
+      "@type": "Person",
+      name: "Omar Akhji",
+      url: "https://omarakhji.dev",
+    },
+  }}
+  ogImage={articleImage}
+  ogType="article"
+  publishedTime={post.data.dateTime}
+  tags={post.data.tags}
+  title={post.data.title}
 >
   <PageWrapper>
     <!-- Reading Progress Bar -->

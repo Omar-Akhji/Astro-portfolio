@@ -1,26 +1,22 @@
 ---
 import "@/styles/globals.css";
 import { ClientRouter } from "astro:transitions";
-import CustomCursor from "@components/ui/CustomCursor.astro";
-import Footer from "@components/layout/Footer.astro";
-import Navbar from "@components/layout/Navbar.astro";
-import Sidebar from "@components/layout/Sidebar.astro";
-import AboutSkeleton from "@components/skeletons/AboutSkeleton.astro";
-import BlogSkeleton from "@components/skeletons/BlogSkeleton.astro";
-import ContactSkeleton from "@components/skeletons/ContactSkeleton.astro";
-import PortfolioSkeleton from "@components/skeletons/PortfolioSkeleton.astro";
-import ResumeSkeleton from "@components/skeletons/ResumeSkeleton.astro";
-import resumeData from "@data/resumeData.json";
+import CustomCursor from "@shared/components/ui/CustomCursor.astro";
+import Footer from "@shared/components/layout/Footer.astro";
+import Navbar from "@shared/components/layout/Navbar.astro";
+import Sidebar from "@shared/components/layout/Sidebar.astro";
+import AboutSkeleton from "@features/about/components/AboutSkeleton.astro";
+import BlogSkeleton from "@features/blog/components/BlogSkeleton.astro";
+import ContactSkeleton from "@features/contact/components/ContactSkeleton.astro";
+import PortfolioSkeleton from "@features/portfolio/components/PortfolioSkeleton.astro";
+import ResumeSkeleton from "@features/resume/components/ResumeSkeleton.astro";
+import resumeData from "@shared/data/resumeData.json";
+import SEO from "@shared/seo/SEO.astro";
+import type { SeoProps } from "@shared/types/seo";
 
-interface Props {
-  title?: string;
-  description?: string;
-}
+interface Props extends SeoProps {}
 
-const {
-  title = "Omar Akhji — Full Stack Web Developer",
-  description = "Full Stack Web Developer based in Rabat, Morocco. Specializing in React, Astro, Node.js, and Python. Explore my portfolio, resume, and blog.",
-} = Astro.props;
+const props = Astro.props;
 ---
 
 <!doctype html>
@@ -48,12 +44,8 @@ const {
       name="generator"
     />
 
-    <title>{title}</title>
+    <SEO {...props} />
     <ClientRouter />
-    <meta
-      content={description}
-      name="description"
-    />
 
     <link
       href="https://fonts.googleapis.com"
@@ -130,6 +122,6 @@ const {
         <Footer />
       </div>
     </div>
-    <script src="../scripts/transitions.ts"></script>
+    <script src="@shared/scripts/transitions.ts"></script>
   </body>
 </html>

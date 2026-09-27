@@ -1,5 +1,5 @@
 ---
-import type { Testimonial } from "@/types";
+import type { Testimonial } from "../types";
 
 interface Props {
   readonly testimonials: readonly Testimonial[];
@@ -102,4 +102,4 @@ const { testimonials } = Astro.props;
   </dialog>
 </section>
 
-<script src="@scripts/testimonials.ts"></script>
+<script src="@features/about/scripts/testimonials.ts"></script>

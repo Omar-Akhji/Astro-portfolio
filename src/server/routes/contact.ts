@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { z } from "zod";
 import type { ContactFieldErrors, ContactFormState, ContactPayload } from "@/types";
+import { verifySubmissionCaptcha } from "@/server/captcha";
 import { sendContactEmail } from "@/server/mailer";
 
 export const ContactSchema = z.object({
@@ -13,6 +14,7 @@ export const ContactSchema = z.object({
     .string()
     .min(10, "Message must be at least 10 characters")
     .max(2000, "Message must be under 2000 characters"),
+  captcha_token: z.string().min(1, "Please complete the human verification check"),
 });
 
 const contactRouter = new Hono();
@@ -39,6 +41,8 @@ contactRouter.post("/", async (c) => {
         fullname: formData.get("fullname"),
         email: formData.get("email"),
         message: formData.get("message"),
+        captcha_token: formData.get("captcha_token"),
+        _gotcha_hp: formData.get("_gotcha_hp"),
       };
     } catch {
       const errorState: ContactFormState = {
@@ -55,6 +59,7 @@ contactRouter.post("/", async (c) => {
     let fullnameError: string | undefined;
     let emailError: string | undefined;
     let messageError: string | undefined;
+    let captchaError: string | undefined;
 
     for (const issue of result.error.issues) {
       const field = issue.path[0];
@@ -64,6 +69,8 @@ contactRouter.post("/", async (c) => {
         emailError = issue.message;
       } else if (field === "message" && !messageError) {
         messageError = issue.message;
+      } else if (field === "captcha_token" && !captchaError) {
+        captchaError = issue.message;
       }
     }
 
@@ -71,6 +78,7 @@ contactRouter.post("/", async (c) => {
       ...(fullnameError && { fullname: fullnameError }),
       ...(emailError && { email: emailError }),
       ...(messageError && { message: messageError }),
+      ...(captchaError && { captcha: captchaError }),
     };
 
     const errorResponse: ContactFormState = {
@@ -79,6 +87,17 @@ contactRouter.post("/", async (c) => {
       errors: fieldErrors,
     };
 
+    return c.json(errorResponse, 400);
+  }
+
+  // Verify CAPTCHA cryptographic token & honeypot
+  const captchaCheck = verifySubmissionCaptcha(result.data.captcha_token, rawBody["_gotcha_hp"]);
+  if (!captchaCheck.valid) {
+    const errorResponse: ContactFormState = {
+      success: false,
+      message: captchaCheck.error ?? "Human verification failed. Please try again.",
+      errors: { captcha: captchaCheck.error ?? "Verification failed." },
+    };
     return c.json(errorResponse, 400);
   }
 

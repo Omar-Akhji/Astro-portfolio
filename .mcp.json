@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "astro-docs": {
+      "url": "https://mcp.docs.astro.build/mcp"
+    },
+    "vue-docs": {
+      "url": "https://mcp.vue-mcp.org/mcp"
+    },
+    "gsc": {
+      "command": "bunx",
+      "args": ["mcp-server-gsc"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "path/to/your-credentials.json"
+      }
+    },
+    "pagespeed-insights": {
+      "command": "bunx",
+      "args": ["pagespeed-insights-mcp"],
+      "env": {
+        "GOOGLE_API_KEY": "${GOOGLE_API_KEY}"
+      }
+    }
+  }
+}

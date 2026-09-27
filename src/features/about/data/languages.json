@@ -30,27 +30,21 @@
     "url": "/assets/icons/tech/typescript.svg"
   },
   {
-    "id": "react",
-    "name": "React",
-    "order": 6,
-    "url": "/assets/icons/tech/react.svg"
-  },
-  {
     "id": "vuejs",
     "name": "Vue",
-    "order": 7,
+    "order": 6,
     "url": "/assets/icons/tech/vuejs.svg"
   },
   {
     "id": "astro",
     "name": "Astro",
-    "order": 8,
+    "order": 7,
     "url": "/assets/icons/tech/astro.svg"
   },
   {
     "id": "laravel",
     "name": "Laravel",
-    "order": 9,
+    "order": 8,
     "url": "/assets/icons/tech/laravel.svg"
   }
 ]

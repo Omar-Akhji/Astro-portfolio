@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import captchaRouter from "@/server/routes/captcha";
 import contactRouter from "@/server/routes/contact";
 import type { ContactFormState } from "@/types";
 
@@ -22,6 +23,7 @@ app.get("/health", (c) => c.json({ success: true, status: "ok" }));
 
 // Route registration
 app.route("/contact", contactRouter);
+app.route("/captcha", captchaRouter);
 
 // Centralized error handling
 app.onError((err, c) => {

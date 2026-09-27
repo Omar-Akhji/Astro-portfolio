@@ -1,0 +1,199 @@
+---
+/* eslint-disable astro/no-set-html-directive */
+import {
+  AUTHOR_NAME,
+  AUTHOR_TWITTER,
+  GOOGLE_SITE_VERIFICATION,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_PATH,
+  OG_IMAGE_WIDTH,
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_LOCALE,
+  SITE_NAME,
+  SITE_TITLE_DEFAULT,
+  SITE_URL,
+} from "../constants/seo";
+import {
+  buildBreadcrumbSchema,
+  buildPersonSchema,
+  buildWebsiteSchema,
+} from "./structured-data";
+import type { BreadcrumbItem, SeoProps } from "../types/seo";
+
+interface Props extends SeoProps {}
+
+const {
+  title,
+  description = SITE_DESCRIPTION,
+  canonical,
+  ogImage = OG_IMAGE_PATH,
+  ogType = "website",
+  noindex = false,
+  nofollow = false,
+  publishedTime,
+  modifiedTime,
+  tags = [],
+  author = AUTHOR_NAME,
+  customBreadcrumbs,
+  extraSchema,
+} = Astro.props;
+
+// Title calculation
+const formattedTitle =
+  title ?
+    title.includes(SITE_NAME) ?
+      title
+    : `${title} | ${SITE_NAME}`
+  : SITE_TITLE_DEFAULT;
+
+// Absolute Origin & Canonical
+const siteOrigin =
+  Astro.site ? Astro.site.href.replace(/\/$/, "") : SITE_URL;
+const pathname = Astro.url.pathname;
+const normalizedPathname = pathname.endsWith("/") ? pathname : `${pathname}/`;
+const canonicalURL = canonical || new URL(normalizedPathname, siteOrigin).href;
+
+// Absolute OG Image
+const resolvedOgImage =
+  ogImage.startsWith("http://") || ogImage.startsWith("https://") ?
+    ogImage
+  : new URL(ogImage, siteOrigin).href;
+
+// Robots directives
+const robotsDirectives: string[] = [];
+if (noindex) {
+  robotsDirectives.push("noindex");
+} else {
+  robotsDirectives.push("index");
+}
+if (nofollow) {
+  robotsDirectives.push("nofollow");
+} else {
+  robotsDirectives.push("follow");
+}
+if (!noindex) {
+  robotsDirectives.push(
+    "max-image-preview:large",
+    "max-snippet:-1",
+    "max-video-preview:-1",
+  );
+}
+const robotsContent = robotsDirectives.join(", ");
+const googlebotContent = noindex ? "noindex, nofollow" : "index, follow";
+
+// Breadcrumbs generation
+const ROUTE_NAME_MAP: Record<string, string> = {
+  about: "About",
+  resume: "Resume",
+  portfolio: "Portfolio",
+  blog: "Blog",
+  contact: "Contact",
+};
+
+const pathSegments = pathname.split("/").filter(Boolean);
+const breadcrumbs: BreadcrumbItem[] =
+  customBreadcrumbs ?
+    [...customBreadcrumbs]
+  : [
+      { name: "Home", item: `${siteOrigin}/` },
+      ...pathSegments.map((segment, index) => {
+        const segUrl = new URL(
+          "/" + pathSegments.slice(0, index + 1).join("/") + "/",
+          siteOrigin,
+        ).href;
+        const mappedName =
+          ROUTE_NAME_MAP[segment.toLowerCase()] ||
+          segment
+            .split(/[-_]/)
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join(" ");
+        return { name: mappedName, item: segUrl };
+      }),
+    ];
+
+// Structured Data (JSON-LD)
+const extraSchemaList =
+  Array.isArray(extraSchema) ? extraSchema
+  : extraSchema ? [extraSchema]
+  : [];
+
+const schemaGraph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    buildWebsiteSchema(siteOrigin),
+    buildPersonSchema(siteOrigin),
+    buildBreadcrumbSchema(canonicalURL, breadcrumbs),
+    ...extraSchemaList,
+  ],
+};
+---
+
+<!-- Canonical & Base Metadata -->
+<title>{formattedTitle}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content={SITE_KEYWORDS.join(", ")} />
+<meta name="author" content={author} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Search Engine Robots -->
+<meta name="robots" content={robotsContent} />
+<meta name="googlebot" content={googlebotContent} />
+
+<!-- Sitemap & Syndication Discovery -->
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={`${SITE_NAME} RSS Feed`}
+  href="/rss.xml"
+/>
+
+<!-- Google Search Console Site Verification -->
+{GOOGLE_SITE_VERIFICATION && (
+  <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+)}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={formattedTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={resolvedOgImage} />
+<meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+<meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:alt" content={formattedTitle} />
+<meta property="og:locale" content={SITE_LOCALE} />
+
+<!-- Article Metadata (if applicable) -->
+{ogType === "article" && publishedTime && (
+  <meta property="article:published_time" content={publishedTime} />
+)}
+{ogType === "article" && modifiedTime && (
+  <meta property="article:modified_time" content={modifiedTime} />
+)}
+{ogType === "article" && author && (
+  <meta property="article:author" content={author} />
+)}
+{ogType === "article" && tags.map((tag) => (
+  <meta property="article:tag" content={tag} />
+))}
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={AUTHOR_TWITTER} />
+<meta name="twitter:creator" content={AUTHOR_TWITTER} />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={formattedTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={resolvedOgImage} />
+<meta name="twitter:image:alt" content={formattedTitle} />
+
+<!-- JSON-LD Structured Data Graph for Search Engines & GSC -->
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(schemaGraph)}
+/>

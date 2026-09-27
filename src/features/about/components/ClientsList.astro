@@ -1,5 +1,5 @@
 ---
-import SectionTitle from "@components/ui/SectionTitle.astro";
+import SectionTitle from "@shared/components/ui/SectionTitle.astro";
 import { getCollection } from "astro:content";
 
 const clients = await getCollection("clients");
@@ -7,17 +7,15 @@ const clients = await getCollection("clients");
 
 <section class="mb-12">
   <SectionTitle>Clients</SectionTitle>
-  <div class="has-scrollbar snap-x snap-mandatory overflow-x-auto px-1 pt-6 pb-8 md:pb-10">
-    <div class="inline-flex min-w-full rounded-2xl border-2 border-glass-border bg-white/5 p-8">
-      <ul class="flex gap-4">
-        {clients.map((client) => (
-          <li class="flex w-full max-w-60 min-w-30 shrink-0 snap-center items-center justify-center opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 sm:min-w-37.5 md:min-w-45">
-            <div class="text-xl font-bold tracking-widest text-text-muted uppercase">
-              {client.data.alt}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+  <div class="rounded-2xl border-2 border-glass-border bg-white/5 p-6 md:p-8">
+    <ul class="grid grid-cols-2 items-center justify-items-center gap-6 sm:grid-cols-3 md:grid-cols-6">
+      {clients.map((client) => (
+        <li class="flex w-full items-center justify-center opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0">
+          <div class="text-center text-sm font-bold tracking-widest text-text-muted uppercase sm:text-base md:text-sm lg:text-base">
+            {client.data.alt}
+          </div>
+        </li>
+      ))}
+    </ul>
   </div>
 </section>
