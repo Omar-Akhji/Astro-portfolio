@@ -12,7 +12,7 @@ export const SITE_TITLE_DEFAULT = "Omar Akhji — Full Stack Web Developer";
 export const SITE_TITLE_TEMPLATE = "%s | Omar Akhji";
 
 export const SITE_DESCRIPTION =
-  "Full Stack Web Developer based in Rabat, Morocco. Specializing in high-performance web applications with React, Astro, Node.js, TypeScript, and Python. Explore portfolio, resume, and technical articles.";
+  "Full Stack Web Developer based in Rabat, Morocco. Specializing in high-performance web applications with React, Astro, Node.js, TypeScript, and Python. Explore projects, resume, and technical articles.";
 
 export const SITE_KEYWORDS = [
   "Omar Akhji",
@@ -26,7 +26,7 @@ export const SITE_KEYWORDS = [
   "Node.js",
   "Python",
   "Rabat Morocco Developer",
-  "Software Engineer Portfolio",
+  "Software Engineer Projects",
 ];
 
 export const AUTHOR_NAME = "Omar Akhji";

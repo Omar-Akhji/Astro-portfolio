@@ -17,7 +17,7 @@ export function resolveSkeletonRoute(pathname: string): string {
 
   if (lower.startsWith("/blog")) return "/blog";
   if (lower.startsWith("/resume")) return "/resume";
-  if (lower.startsWith("/portfolio")) return "/portfolio";
+  if (lower.startsWith("/projects")) return "/projects";
   if (lower.startsWith("/contact")) return "/contact";
 
   return target;
