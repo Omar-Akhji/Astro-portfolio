@@ -1,7 +1,6 @@
 ---
 import "@/styles/globals.css";
 import { ClientRouter } from "astro:transitions";
-import CustomCursor from "@shared/components/ui/CustomCursor.astro";
 import Footer from "@shared/components/layout/Footer.astro";
 import Navbar from "@shared/components/layout/Navbar.astro";
 import Sidebar from "@shared/components/layout/Sidebar.astro";
@@ -61,8 +60,6 @@ interface Props extends SeoProps {}
   </head>
 
   <body class="relative min-h-screen bg-bg font-sans leading-[1.6] text-text antialiased">
-    <CustomCursor />
-
     <div class="mx-auto my-4 mb-18.75 px-3 min-w-64.75 sm:mt-15 sm:mb-25 sm:max-w-5xl sm:px-4 md:px-6 xl:flex xl:max-w-300 xl:items-stretch xl:justify-center xl:gap-6">
       <Sidebar
         avatar={resumeData.personal.avatar}

@@ -11,12 +11,12 @@ const { testimonials } = Astro.props;
 <section class="mb-9">
   <ul
     id="testimonials-list"
-    class="scrollbar-none flex snap-x snap-mandatory gap-4 overflow-x-auto pbe-6"
+    class="has-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto pbe-6"
   >
     {testimonials.map((testimonial) => (
       <li
         aria-label={`View ${testimonial.name}'s testimonial`}
-        class="testimonial-card relative mt-8 w-full shrink-0 cursor-pointer snap-center rounded-2xl border-2 border-glass-border bg-white/5 p-3.75 pt-11.25 transition-all hover:bg-white/8 focus:ring-2 focus:ring-blueviolet/50 focus:outline-hidden md:w-[calc(50%-0.5rem)] lg:w-[calc(50%-0.5rem)]"
+        class="testimonial-card relative mt-8 w-full shrink-0 cursor-pointer snap-center rounded-2xl border-2 border-glass-border bg-white/5 p-3.75 pt-11.25 transition-all hover:bg-white/8 md:w-[calc(50%-0.5rem)] lg:w-[calc(50%-0.5rem)]"
         data-date={testimonial.date}
         data-name={testimonial.name}
         data-text={testimonial.text}
