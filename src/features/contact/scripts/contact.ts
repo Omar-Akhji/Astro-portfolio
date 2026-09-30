@@ -335,9 +335,8 @@ export const setupContactPage = (): void => {
       return;
     }
 
-    setPending(true);
-
     const formData = new FormData(form);
+    setPending(true);
 
     try {
       const response = await fetch("/api/contact", { method: "POST", body: formData });

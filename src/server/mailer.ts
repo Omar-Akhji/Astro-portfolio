@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import type { Transporter } from "nodemailer";
 import type { ContactPayload } from "@/types";
+import { buildContactText, buildContactHtml } from "./email-template";
 
 let transporterInstance: Transporter | null = null;
 
@@ -80,32 +81,8 @@ export const sendContactEmail = async (payload: ContactPayload): Promise<SendEma
       to: toEmail,
       replyTo: payload.email,
       subject: `Portfolio Contact: ${payload.fullname}`,
-      text: `Name: ${payload.fullname}\nEmail: ${payload.email}\n\nMessage:\n${payload.message}`,
-      html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e0e0e0; border-radius: 12px; background-color: #ffffff;">
-          <h2 style="color: #6346e6; margin-top: 0; font-size: 20px; border-bottom: 2px solid #6346e6; padding-bottom: 12px;">
-            New Contact Message
-          </h2>
-          <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
-            <tr>
-              <td style="padding: 8px 0; font-weight: 600; color: #555555; width: 80px;">Name:</td>
-              <td style="padding: 8px 0; color: #222222;">${payload.fullname}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0; font-weight: 600; color: #555555;">Email:</td>
-              <td style="padding: 8px 0; color: #222222;">
-                <a href="mailto:${payload.email}" style="color: #6346e6; text-decoration: none;">${payload.email}</a>
-              </td>
-            </tr>
-          </table>
-          <hr style="border: none; border-top: 1px solid #eeeeee; margin: 20px 0;" />
-          <div style="padding: 16px; background-color: #f7f7fa; border-radius: 8px; border-left: 4px solid #6346e6;">
-            <p style="white-space: pre-wrap; color: #333333; line-height: 1.6; margin: 0; font-size: 15px;">
-              ${payload.message}
-            </p>
-          </div>
-        </div>
-      `,
+      text: buildContactText(payload),
+      html: buildContactHtml(payload),
     });
 
     return { success: true, message: "Message sent successfully! I'll get back to you soon." };
