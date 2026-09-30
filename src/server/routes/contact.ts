@@ -5,7 +5,7 @@ import { verifySubmissionCaptcha } from "@/server/captcha";
 import { sendContactEmail } from "@/server/mailer";
 
 export const ContactSchema = z.object({
-  fullname: z
+  fullName: z
     .string()
     .min(2, "Name must be at least 2 characters")
     .max(100, "Name must be under 100 characters"),
@@ -14,7 +14,7 @@ export const ContactSchema = z.object({
     .string()
     .min(10, "Message must be at least 10 characters")
     .max(2000, "Message must be under 2000 characters"),
-  captcha_token: z.string().min(1, "Please complete the human verification check"),
+  captchaToken: z.string().min(1, "Please complete the human verification check"),
 });
 
 const contactRouter = new Hono();
@@ -38,10 +38,10 @@ contactRouter.post("/", async (c) => {
     try {
       const formData = await c.req.formData();
       rawBody = {
-        fullname: formData.get("fullname"),
+        fullName: formData.get("fullName"),
         email: formData.get("email"),
         message: formData.get("message"),
-        captcha_token: formData.get("captcha_token"),
+        captchaToken: formData.get("captchaToken"),
         _gotcha_hp: formData.get("_gotcha_hp"),
       };
     } catch {
@@ -56,26 +56,26 @@ contactRouter.post("/", async (c) => {
   const result = ContactSchema.safeParse(rawBody);
 
   if (!result.success) {
-    let fullnameError: string | undefined;
+    let fullNameError: string | undefined;
     let emailError: string | undefined;
     let messageError: string | undefined;
     let captchaError: string | undefined;
 
     for (const issue of result.error.issues) {
       const field = issue.path[0];
-      if (field === "fullname" && !fullnameError) {
-        fullnameError = issue.message;
+      if (field === "fullName" && !fullNameError) {
+        fullNameError = issue.message;
       } else if (field === "email" && !emailError) {
         emailError = issue.message;
       } else if (field === "message" && !messageError) {
         messageError = issue.message;
-      } else if (field === "captcha_token" && !captchaError) {
+      } else if (field === "captchaToken" && !captchaError) {
         captchaError = issue.message;
       }
     }
 
     const fieldErrors: ContactFieldErrors = {
-      ...(fullnameError && { fullname: fullnameError }),
+      ...(fullNameError && { fullName: fullNameError }),
       ...(emailError && { email: emailError }),
       ...(messageError && { message: messageError }),
       ...(captchaError && { captcha: captchaError }),
@@ -91,7 +91,7 @@ contactRouter.post("/", async (c) => {
   }
 
   // Verify CAPTCHA cryptographic token & honeypot
-  const captchaCheck = verifySubmissionCaptcha(result.data.captcha_token, rawBody["_gotcha_hp"]);
+  const captchaCheck = verifySubmissionCaptcha(result.data.captchaToken, rawBody["_gotcha_hp"]);
   if (!captchaCheck.valid) {
     const errorResponse: ContactFormState = {
       success: false,

@@ -1,5 +1,5 @@
 export interface ContactFieldErrors {
-  readonly fullname?: string;
+  readonly fullName?: string;
   readonly email?: string;
   readonly message?: string;
   readonly captcha?: string;
@@ -10,8 +10,8 @@ export type ContactFormState =
   | { readonly success: false; readonly message: string; readonly errors?: ContactFieldErrors };
 
 export interface ContactPayload {
-  readonly fullname: string;
+  readonly fullName: string;
   readonly email: string;
   readonly message: string;
-  readonly captcha_token: string;
+  readonly captchaToken: string;
 }

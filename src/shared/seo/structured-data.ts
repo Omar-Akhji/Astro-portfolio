@@ -10,9 +10,7 @@ import {
 } from "../constants/seo";
 import type { BreadcrumbItem } from "../types/seo";
 
-export function buildPersonSchema(
-  siteUrl: string = SITE_URL,
-): Record<string, unknown> {
+export function buildPersonSchema(siteUrl: string = SITE_URL): Record<string, unknown> {
   return {
     "@type": "Person",
     "@id": `${siteUrl}/#person`,
@@ -22,11 +20,7 @@ export function buildPersonSchema(
     image: `${siteUrl}/assets/avatar/oa-avatar.png`,
     email: AUTHOR_EMAIL,
     telephone: AUTHOR_PHONE,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Rabat",
-      addressCountry: "Morocco",
-    },
+    address: { "@type": "PostalAddress", addressLocality: "Rabat", addressCountry: "Morocco" },
     sameAs: [AUTHOR_GITHUB, AUTHOR_LINKEDIN],
     knowsAbout: [
       "JavaScript",
@@ -42,9 +36,7 @@ export function buildPersonSchema(
   };
 }
 
-export function buildWebsiteSchema(
-  siteUrl: string = SITE_URL,
-): Record<string, unknown> {
+export function buildWebsiteSchema(siteUrl: string = SITE_URL): Record<string, unknown> {
   return {
     "@type": "WebSite",
     "@id": `${siteUrl}/#website`,
@@ -52,9 +44,7 @@ export function buildWebsiteSchema(
     name: SITE_NAME,
     description: SITE_DESCRIPTION,
     inLanguage: "en-US",
-    publisher: {
-      "@id": `${siteUrl}/#person`,
-    },
+    publisher: { "@id": `${siteUrl}/#person` },
   };
 }
 

@@ -24,8 +24,7 @@ const { Content } = await render(post);
 // Calculate reading time
 const wordCount = post.body ? post.body.split(/\s+/).length : 0;
 const readingTime = Math.max(1, Math.round(wordCount / 200));
-const articleImage =
-  typeof post.data.image === "string" ? post.data.image : post.data.image.src;
+const articleImage = typeof post.data.image === "string" ? post.data.image : post.data.image.src;
 ---
 
 <Layout
@@ -38,11 +37,7 @@ const articleImage =
     keywords: post.data.tags.join(", "),
     articleSection: post.data.category,
     image: articleImage,
-    author: {
-      "@type": "Person",
-      name: "Omar Akhji",
-      url: "https://omarakhji.dev",
-    },
+    author: { "@type": "Person", name: "Omar Akhji", url: "https://omarakhji.dev" },
   }}
   ogImage={articleImage}
   ogType="article"

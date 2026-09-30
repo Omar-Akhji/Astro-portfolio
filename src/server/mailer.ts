@@ -77,10 +77,10 @@ export const sendContactEmail = async (payload: ContactPayload): Promise<SendEma
 
   try {
     await transporter.sendMail({
-      from: `"${payload.fullname}" <${fromEmail}>`,
+      from: `"${payload.fullName}" <${fromEmail}>`,
       to: toEmail,
       replyTo: payload.email,
-      subject: `Portfolio Contact: ${payload.fullname}`,
+      subject: `Portfolio Contact: ${payload.fullName}`,
       text: buildContactText(payload),
       html: buildContactHtml(payload),
     });

@@ -8,7 +8,10 @@ const clients = await getCollection("clients");
 <section class="mb-12">
   <SectionTitle>Clients</SectionTitle>
   <div class="overflow-hidden rounded-2xl border-2 border-glass-border bg-white/5 p-6 md:p-8">
-    <ul id="clients-content" class="flex gap-6 overflow-x-auto scrollbar-none">
+    <ul
+      id="clients-content"
+      class="flex gap-6 overflow-x-auto scrollbar-none"
+    >
       {clients.map((client) => (
         <li class="flex min-w-28 shrink-0 items-center justify-center opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 sm:min-w-32 md:min-w-36">
           <div class="text-center text-sm font-bold tracking-widest text-text-muted uppercase sm:text-base">
@@ -18,8 +21,14 @@ const clients = await getCollection("clients");
       ))}
     </ul>
   </div>
-  <div id="clients-scrollbar" class="has-scrollbar mt-6 overflow-x-auto">
-    <div id="clients-scrollbar-inner" class="h-px"></div>
+  <div
+    id="clients-scrollbar"
+    class="has-scrollbar mt-6 overflow-x-auto"
+  >
+    <div
+      id="clients-scrollbar-inner"
+      class="h-px"
+    ></div>
   </div>
 </section>
 

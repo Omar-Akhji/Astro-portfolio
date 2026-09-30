@@ -48,11 +48,11 @@ export const setupContactPage = (): void => {
   const submitIcon = document.querySelector<SVGElement>("#submit-icon");
   const submitLabel = document.querySelector<HTMLSpanElement>("#submit-label");
 
-  const fullnameInput = document.querySelector<HTMLInputElement>("#fullname");
+  const fullNameInput = document.querySelector<HTMLInputElement>("#full-name");
   const emailInput = document.querySelector<HTMLInputElement>("#email");
   const messageInput = document.querySelector<HTMLTextAreaElement>("#message");
 
-  const fullnameError = document.querySelector<HTMLParagraphElement>("#fullname-error");
+  const fullNameError = document.querySelector<HTMLParagraphElement>("#full-name-error");
   const emailError = document.querySelector<HTMLParagraphElement>("#email-error");
   const messageError = document.querySelector<HTMLParagraphElement>("#message-error");
 
@@ -77,10 +77,10 @@ export const setupContactPage = (): void => {
     || !submitSpinner
     || !submitIcon
     || !submitLabel
-    || !fullnameInput
+    || !fullNameInput
     || !emailInput
     || !messageInput
-    || !fullnameError
+    || !fullNameError
     || !emailError
     || !messageError
     || !captchaWidget
@@ -269,7 +269,7 @@ export const setupContactPage = (): void => {
 
   const setPending = (pending: boolean): void => {
     submitBtn.disabled = pending;
-    fullnameInput.disabled = pending;
+    fullNameInput.disabled = pending;
     emailInput.disabled = pending;
     messageInput.disabled = pending;
     captchaBtn.disabled = pending;
@@ -284,9 +284,9 @@ export const setupContactPage = (): void => {
   };
 
   const clearFieldErrors = (): void => {
-    fullnameError.textContent = "";
-    fullnameError.classList.add("hidden");
-    fullnameInput.classList.remove("border-red-500/50!");
+    fullNameError.textContent = "";
+    fullNameError.classList.add("hidden");
+    fullNameInput.classList.remove("border-red-500/50!");
 
     emailError.textContent = "";
     emailError.classList.add("hidden");
@@ -351,10 +351,10 @@ export const setupContactPage = (): void => {
         } else {
           showBanner(false, rawData.message);
           if (rawData.errors) {
-            if (rawData.errors.fullname) {
-              fullnameError.textContent = rawData.errors.fullname;
-              fullnameError.classList.remove("hidden");
-              fullnameInput.classList.add("border-red-500/50!");
+            if (rawData.errors.fullName) {
+              fullNameError.textContent = rawData.errors.fullName;
+              fullNameError.classList.remove("hidden");
+              fullNameInput.classList.add("border-red-500/50!");
             }
             if (rawData.errors.email) {
               emailError.textContent = rawData.errors.email;

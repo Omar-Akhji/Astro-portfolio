@@ -4,9 +4,7 @@ import SectionTitle from "@shared/components/ui/SectionTitle.astro";
 import { getCollection } from "astro:content";
 
 const rawEducation = await getCollection("education");
-const education = rawEducation.toSorted(
-  (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)
-);
+const education = rawEducation.toSorted((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 const experience = await getCollection("experience");
 const skills = await getCollection("skills");
 ---

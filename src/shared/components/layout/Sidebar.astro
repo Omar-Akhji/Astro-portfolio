@@ -29,7 +29,7 @@ const lastName = nameParts.slice(1).join(" ");
     <header class="relative flex items-center justify-start gap-4 sm:gap-6 xl:flex-col">
       <!-- Avatar -->
       <div class="relative flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-full border-4 border-[#C0C0C0] bg-linear-to-r from-violet to-blueviolet shadow-2 drop-shadow-lg sm:size-32 xl:mx-auto xl:size-44">
-        {avatar ? (
+        {avatar ?
           <img
             alt={name}
             class="size-full object-cover object-top"
@@ -39,17 +39,16 @@ const lastName = nameParts.slice(1).join(" ");
             src={avatar}
             width="176"
           />
-        ) : (
-          <span class="text-[1.5rem] font-bold text-bg sm:text-[2.5rem] xl:text-[3.5rem]">
+        : <span class="text-[1.5rem] font-bold text-bg sm:text-[2.5rem] xl:text-[3.5rem]">
             {initials}
           </span>
-        )}
+        }
       </div>
 
       <!-- Name & Title -->
       <div class="xl:text-center">
         <p class="mbe-2 bg-radial-[at_center_top] from-indigo to-blueviolet bg-clip-text text-[1.0625rem] font-medium tracking-tight text-transparent uppercase sm:mbe-4 sm:text-[1.625rem] xl:whitespace-nowrap">
-          {firstName}{" "}<span class="font-extrabold">{lastName}</span>
+          {firstName} <span class="font-extrabold">{lastName}</span>
         </p>
         <p class="w-max rounded-full bg-white/8 px-3 py-0.5 text-[0.6875rem] font-light text-text sm:px-4.5 sm:py-1 sm:text-xs xl:mx-auto">
           {title}

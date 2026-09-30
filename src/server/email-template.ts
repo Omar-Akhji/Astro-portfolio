@@ -1,13 +1,11 @@
 import type { ContactPayload } from "@/types";
 
-/**
- * Builds the plain-text fallback for the contact email.
- */
+/** Builds the plain-text fallback for the contact email. */
 export const buildContactText = (payload: ContactPayload): string =>
   [
     "━━━ New Contact Message ━━━",
     "",
-    `From:    ${payload.fullname}`,
+    `From:    ${payload.fullName}`,
     `Email:   ${payload.email}`,
     "",
     "Message:",
@@ -17,9 +15,8 @@ export const buildContactText = (payload: ContactPayload): string =>
   ].join("\n");
 
 /**
- * Builds the HTML body for the contact email.
- * Design mirrors the portfolio: Montserrat font, dark bg, glass-border cards,
- * gradient underline bar on section title, muted labels.
+ * Builds the HTML body for the contact email. Design mirrors the portfolio: Montserrat font, dark
+ * bg, glass-border cards, gradient underline bar on section title, muted labels.
  */
 export const buildContactHtml = (payload: ContactPayload): string => {
   const year = String(new Date().getFullYear());
@@ -51,7 +48,7 @@ export const buildContactHtml = (payload: ContactPayload): string => {
           <tr>
             <td style="padding: 0 0 20px 0;">
               <p style="margin: 0 0 4px 0; font-size: 11px; font-weight: 500; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; letter-spacing: 0.05em;">Name</p>
-              <p style="margin: 0 0 16px 0; font-size: 15px; font-weight: 500; color: #ffffff;">${payload.fullname}</p>
+              <p style="margin: 0 0 16px 0; font-size: 15px; font-weight: 500; color: #ffffff;">${payload.fullName}</p>
               <p style="margin: 0 0 4px 0; font-size: 11px; font-weight: 500; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; letter-spacing: 0.05em;">Email</p>
               <p style="margin: 0; font-size: 15px;"><a href="mailto:${payload.email}" style="color: #b06aff; text-decoration: none; font-weight: 400;">${payload.email}</a></p>
             </td>
